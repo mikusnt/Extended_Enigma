@@ -6,12 +6,13 @@
 
 /* 
  * File:   main.cpp
- * Author: user
+ * Author: Mikolaj Stankowiak
  *
  * Created on 7 lutego 2019, 11:22
  */
 
 #include <cstdlib>
+#include "rotor.hpp"
 
 using namespace std;
 
