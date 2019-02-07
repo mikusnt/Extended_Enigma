@@ -17,18 +17,14 @@
 
 #include <string>
 #include <vector>
+#include <iostream>
 
 using namespace std;
 
-extern vector<vector<string>> rotorDict;
-
-extern const unsigned int DICT_SIZE;
-
 typedef enum {
-    rotorTypeRegular,
-    rotorTypeBeta,
-    rotorTypeGamma
-} RotorTypes;
+    rotorTypeRegular = 0,
+    rotorTypeReflector = 1     
+} RotorType;
 
 typedef enum {
     directionLeft = 0,
@@ -36,22 +32,24 @@ typedef enum {
 } TranslateDirection;
 
 typedef struct {
-    RotorTypes type;
-    unsigned int number;
+
     RotorParams();
     bool areParamsCorrect();
 } RotorParams;
 
 class Rotor {
 private:
-    RotorParams params;
-    unsigned int rotatePosition;
+    RotorType type;
+    unsigned int id;
     unsigned int shift;
 public:
-    Rotor(RotorParams params);
+    Rotor(RotorType type, unsigned int id);
+    Rotor(RotorType type, unsigned int id, unsigned int newPosition);
     Rotor(const Rotor& rotor);
-    void rotate(unsigned int position);
-    void tryRotate();
+    
+    void rotate();
+    void rotate(unsigned int newPosition);
+    bool canNextRotate();
     char translate(char input, TranslateDirection direction);
 };
 
