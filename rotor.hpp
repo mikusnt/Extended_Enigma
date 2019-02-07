@@ -21,6 +21,7 @@
 using namespace std;
 
 extern vector<vector<string>> rotorDict;
+
 extern const unsigned int DICT_SIZE;
 
 typedef enum {
@@ -37,9 +38,6 @@ typedef enum {
 typedef struct {
     RotorTypes type;
     unsigned int number;
-    unsigned int startPosition;
-    unsigned int moveEvery;
-    
     RotorParams();
     bool areParamsCorrect();
 } RotorParams;
@@ -52,6 +50,8 @@ private:
 public:
     Rotor(RotorParams params);
     Rotor(const Rotor& rotor);
+    void rotate(unsigned int position);
+    void tryRotate();
     char translate(char input, TranslateDirection direction);
 };
 
