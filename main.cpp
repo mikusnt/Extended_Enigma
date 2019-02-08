@@ -15,6 +15,7 @@
 #include <cstdlib>
 #include <conio.h>
 #include "rotor.hpp"
+#include "plugboard.hpp"
 
 using namespace std;
 
