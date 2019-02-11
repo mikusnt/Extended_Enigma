@@ -47,12 +47,14 @@ Rotor::Rotor(RotorType type, unsigned int id) : shift(0), id(id) {
     this->type = type;
 }
 
-Rotor::Rotor(RotorType type, unsigned int id, unsigned int newPosition) : Rotor(type, id) {
-    this->shift = newPosition;
+Rotor::Rotor(RotorType type, unsigned int id, unsigned int poosition) : Rotor(type, id) {
+    this->shift = poosition;
 }
 
 Rotor::Rotor(const Rotor& rotor) 
 : shift(rotor.shift), type(rotor.type), id(rotor.id) {}
+
+void Rotor::setType(RotorType type) { this->type = type; }
 
 void Rotor::rotate() {
     shift = (++shift % DICT_SIZE);

@@ -16,6 +16,8 @@
 #include <conio.h>
 #include "rotor.hpp"
 #include "plugboard.hpp"
+#include "enigma_reader.hpp"
+
 
 using namespace std;
 
@@ -23,22 +25,23 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-    Rotor rotor(rotorTypeRegular, 0, 0);
-    
-    string text;
-    char sign;
-    do {
-        //cin >> text;
-        sign = getch();
-        //for (int i = 0; i < text.length(); i++) {
-            //rotor.rotate();
-        //cout << 
-            //cout << text[i];
-        //}
-        rotor.rotate();
-        cout << sign << " >> " << rotor.translate(sign, directionLeft) << endl;
-        
-    } while (sign != 27);
+//    Rotor rotor(rotorTypeRegular, 0, 0);
+//    
+//    string text;
+//    char sign;
+//    do {
+//        //cin >> text;
+//        sign = getch();
+//        //for (int i = 0; i < text.length(); i++) {
+//            //rotor.rotate();
+//        //cout << 
+//            //cout << text[i];
+//        //}
+//        rotor.rotate();
+//        cout << sign << " >> " << rotor.translate(sign, directionLeft) << endl;
+//        
+//    } while (sign != 27);
+    EnigmaReader reader("enigma.ini");
     return 0;
 }
 

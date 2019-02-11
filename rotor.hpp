@@ -43,10 +43,13 @@ private:
     unsigned int id;
     unsigned int shift;
 public:
+    static const unsigned int BETA_ID = 8;
+    static const unsigned int GAMMA_ID = 9;
     Rotor(RotorType type, unsigned int id);
-    Rotor(RotorType type, unsigned int id, unsigned int newPosition);
+    Rotor(RotorType type, unsigned int id, unsigned int position);
     Rotor(const Rotor& rotor);
     
+    void setType(RotorType type);
     void rotate();
     void rotate(unsigned int newPosition);
     bool canNextRotate();

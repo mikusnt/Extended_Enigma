@@ -35,6 +35,9 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/_ext/a4ed2b29/INIReader.o \
+	${OBJECTDIR}/_ext/a4ed2b29/ini.o \
+	${OBJECTDIR}/enigma_reader.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/plugboard.o \
 	${OBJECTDIR}/rotor.o
@@ -63,6 +66,21 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/extended_enigma.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/extended_enigma ${OBJECTFILES} ${LDLIBSOPTIONS} -static-libgcc -static-libstdc++
+
+${OBJECTDIR}/_ext/a4ed2b29/INIReader.o: ../config_files/INIReader.cpp
+	${MKDIR} -p ${OBJECTDIR}/_ext/a4ed2b29
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/a4ed2b29/INIReader.o ../config_files/INIReader.cpp
+
+${OBJECTDIR}/_ext/a4ed2b29/ini.o: ../config_files/ini.c
+	${MKDIR} -p ${OBJECTDIR}/_ext/a4ed2b29
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/a4ed2b29/ini.o ../config_files/ini.c
+
+${OBJECTDIR}/enigma_reader.o: enigma_reader.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/enigma_reader.o enigma_reader.cpp
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
