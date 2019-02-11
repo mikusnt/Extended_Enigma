@@ -37,7 +37,7 @@ char Plugboard::translate(char input) {
     input = toupper(input);
     if ((input >= 'A') && (input <= 'Z')) {
         return actual[input];
-    } else return 'X';
+    } else return ERROR_CHAR;
 }
 
 

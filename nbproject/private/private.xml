@@ -7,9 +7,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/MS-1/Documents/NetBeansProjects/Extended_Enigma/rotor.cpp</file>
-            <file>file:/C:/Users/MS-1/Documents/NetBeansProjects/Extended_Enigma/rotor.hpp</file>
-            <file>file:/C:/Users/MS-1/Documents/NetBeansProjects/Extended_Enigma/main.cpp</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/Extended_Enigma/plugboard.cpp</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/Extended_Enigma/rotor.cpp</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/Extended_Enigma/main.cpp</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/Extended_Enigma/plugboard.hpp</file>
+            <file>file:/C:/Users/user/Documents/NetBeansProjects/Extended_Enigma/rotor.hpp</file>
         </group>
     </open-files>
 </project-private>

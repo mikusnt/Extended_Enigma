@@ -4,48 +4,9 @@
  * and open the template in the editor.
  */
 
-#include <ios>
-
 #include "rotor.hpp"
 
-vector<vector<string>> rotorDict = {{ "EKMFLGDQVZNTOWYHXUSPAIBRCJ", "UWYGADFPVZBECKMTHXSLRINQOJ" },
-        { "AJDKSIRUXBLHWTMCQGZNPYFVOE", "AJPCZWRLFBDKOTYUQGENHXMIVS" },
-        { "BDFHJLCPRTXVZNYEIWGAKMUSQO", "TAGBPCSDQEUFVNZHYIXJWLRKOM" },
-        { "ESOVPZJAYQUIRHXLNFTGKDCMWB", "HZWVARTNLGUPXQCEJMBSKDYOIF" },
-        { "VZBRGITYUPSDNHLXAWMJQOFECK", "QCYLXWENFTZOSMVJUDKGIARPHB" },
-        { "JPGVOUMFYQBENHZRDKASXLICTW", "SKXQLHCNWARVGMEBJPTYFDZUIO" },
-        { "NZJHGRCXMYSWBOUFAIVLPEKQDT", "QMGYVPEDRCWTIANUXFKZOSLHJB" },
-        { "FKQHTLXOCBJSPDZRAMEWNIUYGV", "QJINSAYDVKBFRUHMCPLEWZTGXO" },
-        { "LEYJVCNIXWPBQMDRTAKZGFUHOS", "RLFOBVUXHDSANGYKMPZQWEJICT" },
-        { "FSOKANUERHMBTIYCWLQPZXVGJD", "ELPZHAXJNYDRKFCTSIBMGWQVOU" }
-};
-
-string reflectorDict[] = { 
-    "YRUHQSLDPXNGOKMIEBFZCWVJAT", 
-    "FVPJIAOYEDRZXWGCTKUQSBNMHL", 
-    "ENKQAUYWJICOPBLMDXZVFTHRGS", 
-    "RDOBJNTKVEHMLFCWZAXGYIPSUQ"
-};
-
-const unsigned int DICT_SIZE =  26;
-const string rotorPos[] = {"R", "F", "W", "K", "A", "AN", "AN", "AN"};
-const unsigned int BETA_POS = 8;
-const unsigned int GAMMA_POS = 9;
-
-//bool RotorParams::areParamsCorrect() {
-//    if (id < rotorDict.size())
-//        return true;
-//    else return false;
-//}
-//
-//RotorParams::RotorParams() {
-//    this->type = rotorTypeRegular;
-//    this->id = 0;
-//}
-
-Rotor::Rotor(RotorType type, unsigned int id) : shift(0), id(id) {
-    this->type = type;
-}
+Rotor::Rotor(RotorType type, unsigned int id) : shift(0), type(type), id(id) {}
 
 Rotor::Rotor(RotorType type, unsigned int id, unsigned int newPosition) : Rotor(type, id) {
     this->shift = newPosition;
@@ -65,7 +26,7 @@ void Rotor::rotate(unsigned int newPosition) {
 bool Rotor::canNextRotate() {
     if ((type == rotorTypeRegular) && (id < 8)) {
         char toFind = (char)(shift + 65);
-        if (rotorPos[id].find(toFind))
+        if (ROTOR_POS[id].find(toFind))
             return true;
     } else if (type == rotorTypeReflector) {
         
@@ -78,11 +39,11 @@ char Rotor::translate(char input, TranslateDirection direction) {
     //    shift = (++shift % DICT_SIZE);
     input = toupper(input);
     if (type == rotorTypeRegular) {
-        if ((input >= 'A') && (input <= 'Z')) return rotorDict[id][direction][(input - 65 + shift) % DICT_SIZE];
-        else return rotorDict[id][direction][0];
+        if ((input >= 'A') && (input <= 'Z')) return ROTOR_DICT[id][direction][(input - 65 + shift) % DICT_SIZE];
+        else return ERROR_CHAR;
     } else if (type == rotorTypeReflector) {
-        if ((input >= 'A') && (input <= 'Z')) return reflectorDict[id][(input - 65 + shift) % DICT_SIZE];
-        else return reflectorDict[id][0];
+        if ((input >= 'A') && (input <= 'Z')) return REFLECTOR_DICT[id][(input - 65 + shift) % DICT_SIZE];
+        else return ERROR_CHAR;
     }
     /*
     else  if ((input >= 'A') && (input <= 'Z')) return rotorDict[this->params.id][direction][(input - 54 + shift) % DICT_SIZE];

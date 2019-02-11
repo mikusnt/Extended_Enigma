@@ -31,14 +31,31 @@ typedef enum {
     directionRight = 1
 } TranslateDirection;
 
-typedef struct {
-
-    RotorParams();
-    bool areParamsCorrect();
-} RotorParams;
-
 class Rotor {
 private:
+    const string ROTOR_DICT[10][2] = {{ "EKMFLGDQVZNTOWYHXUSPAIBRCJ", "UWYGADFPVZBECKMTHXSLRINQOJ" },
+            { "AJDKSIRUXBLHWTMCQGZNPYFVOE", "AJPCZWRLFBDKOTYUQGENHXMIVS" },
+            { "BDFHJLCPRTXVZNYEIWGAKMUSQO", "TAGBPCSDQEUFVNZHYIXJWLRKOM" },
+            { "ESOVPZJAYQUIRHXLNFTGKDCMWB", "HZWVARTNLGUPXQCEJMBSKDYOIF" },
+            { "VZBRGITYUPSDNHLXAWMJQOFECK", "QCYLXWENFTZOSMVJUDKGIARPHB" },
+            { "JPGVOUMFYQBENHZRDKASXLICTW", "SKXQLHCNWARVGMEBJPTYFDZUIO" },
+            { "NZJHGRCXMYSWBOUFAIVLPEKQDT", "QMGYVPEDRCWTIANUXFKZOSLHJB" },
+            { "FKQHTLXOCBJSPDZRAMEWNIUYGV", "QJINSAYDVKBFRUHMCPLEWZTGXO" },
+            { "LEYJVCNIXWPBQMDRTAKZGFUHOS", "RLFOBVUXHDSANGYKMPZQWEJICT" },
+            { "FSOKANUERHMBTIYCWLQPZXVGJD", "ELPZHAXJNYDRKFCTSIBMGWQVOU" }
+    };
+    const string REFLECTOR_DICT[4] = { 
+        "YRUHQSLDPXNGOKMIEBFZCWVJAT", 
+        "FVPJIAOYEDRZXWGCTKUQSBNMHL", 
+        "ENKQAUYWJICOPBLMDXZVFTHRGS", 
+        "RDOBJNTKVEHMLFCWZAXGYIPSUQ"
+    };
+    const unsigned int DICT_SIZE =  26;
+    const string ROTOR_POS[8] = {"R", "F", "W", "K", "A", "AN", "AN", "AN"};
+    const unsigned int BETA_POS = 8;
+    const unsigned int GAMMA_POS = 9;
+    const char ERROR_CHAR = 'X';
+
     RotorType type;
     unsigned int id;
     unsigned int shift;

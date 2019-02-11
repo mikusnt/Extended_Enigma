@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
     char sign;
     do {
         //cin >> text;
-        sign = getch();
+        sign = toupper(getch());
         //for (int i = 0; i < text.length(); i++) {
             //rotor.rotate();
         //cout << 

@@ -22,10 +22,11 @@ using namespace std;
 class Plugboard {
 private:
     const string ORIGINAL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const char ERROR_CHAR = 'X';
 public:
     string actual;
     Plugboard();
-    Plugboard(string actual);
+    Plugboard(string rules);
     bool addConnect(char input, char output);
     bool removeConnect(char input);
     char translate(char input);
