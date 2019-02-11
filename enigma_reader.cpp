@@ -7,6 +7,10 @@
 
 #include "enigma_reader.hpp"
 
+const string EnigmaReader::REGULAR = "regular";
+const string EnigmaReader::REFLECTOR = "reflector";
+const string EnigmaReader::BETA = "beta";
+const string EnigmaReader::GAMMA = "gamma";
 
 EnigmaReader::EnigmaReader(string filename) {
     INIReader reader(filename);
@@ -15,12 +19,15 @@ EnigmaReader::EnigmaReader(string filename) {
     if (parseError < 0)
         return;
     string temp;
-    stringstream concat;
     
     // plugboard
     temp = reader.GetString(PLUGBOARD, RULES, EMPTY);
-    if (temp == EMPTY)
+    if (temp == EMPTY) {
+        parseError = -1;
         return;
+    }
+    
+    
     
     for(int i=0; i<temp.length(); i++)
         if(temp[i] == ' ') temp.erase(i,1);
@@ -29,16 +36,20 @@ EnigmaReader::EnigmaReader(string filename) {
     int commaPos = temp.find(",");
     while (commaPos != string::npos) {
         temp = temp.substr(commaPos+1);
-         plugboard.addConnect(temp[0], temp[1]);
+        if (!plugboard.addConnect(temp[0], temp[1])) {
+            parseError = -1;
+            return;
+        }
         commaPos = temp.find(",");  
     }
     
+    stringstream concat;
     // rotors
     for (int i = 0; temp != EMPTY; i++) {
         concat << ROTOR << i;
         temp = reader.GetString(concat.str(), TYPE, EMPTY);
         if (temp == EMPTY)
-            return;
+            break;
         
         RotorType type = rotorTypeRegular;
         if (temp == REGULAR)
@@ -49,22 +60,28 @@ EnigmaReader::EnigmaReader(string filename) {
         
         temp = reader.GetString(concat.str(), ID, EMPTY);
         int id = 0;
-        // TODO rename
-        if (temp == BETA_ID)
-            id = Rotor::BETA_ID;
-        else if (temp == GAMMA_ID)
-            id = Rotor::GAMMA_ID;
+        if (temp == BETA)
+            id = Rotor::BETA_POS;
+        else if (temp == GAMMA)
+            id = Rotor::GAMMA_POS;
         else id = stoi(temp);
-        
-        // TODO rename 26 to dict size
-        int position = reader.GetInteger(concat.str(), POSITION, 0) % 26;
+
+        int position = reader.GetInteger(concat.str(), POSITION, 0) % Rotor::DICT_SIZE;
         Rotor rotor(type, id, position);
         rotors.push_back(rotor);
-        concat.clear();
+        concat.str("");
     }
     
     rotors.back().setType(rotorTypeReflector);
     
+}
+
+Plugboard EnigmaReader::getPlugboard() {
+    return plugboard;
+}
+
+vector<Rotor> EnigmaReader::getRotors() {
+    return rotors;
 }
 
 

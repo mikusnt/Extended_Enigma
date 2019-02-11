@@ -21,14 +21,19 @@ using namespace std;
 
 class Plugboard {
 private:
+    const char ERROR_CHAR = 'X';
+protected:
     const string ORIGINAL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-public:
     string actual;
+    bool haveDuplicates(string word);
+public:
     Plugboard();
-    Plugboard(string rules);
+    //Plugboard(string rules);
     bool addConnect(char input, char output);
     bool removeConnect(char input);
     char translate(char input);
+    
+    friend ostream& operator<<(ostream& os, const Plugboard& plugboard);
 };
 
 #endif /* PLUGBOARD_HPP */

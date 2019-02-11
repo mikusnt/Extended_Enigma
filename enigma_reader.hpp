@@ -30,18 +30,22 @@ private:
     
     const string ROTOR = "rotor_";
     const string TYPE = "type";
-    const string REGULAR = "regular";
-    const string REFLECTOR = "reflector";
+
     const string ID = "id";
-    const string BETA_ID = "beta";
-    const string GAMMA_ID = "gamma";
     const string POSITION = "position";
     
     const string EMPTY = "_empty";
     
     Plugboard plugboard;
     vector<Rotor> rotors;
+    
+    bool haveDuplicates();
 public:
+    static const string REGULAR;
+    static const string REFLECTOR;;
+    static const string BETA;
+    static const string GAMMA;
+    
     int parseError;
     EnigmaReader(string filename);
     

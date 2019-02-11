@@ -21,27 +21,23 @@
 
 using namespace std;
 
-/*
- * 
- */
 int main(int argc, char** argv) {
-//    Rotor rotor(rotorTypeRegular, 0, 0);
-//    
-//    string text;
-//    char sign;
-//    do {
-//        //cin >> text;
-//        sign = getch();
-//        //for (int i = 0; i < text.length(); i++) {
-//            //rotor.rotate();
-//        //cout << 
-//            //cout << text[i];
-//        //}
-//        rotor.rotate();
-//        cout << sign << " >> " << rotor.translate(sign, directionLeft) << endl;
-//        
-//    } while (sign != 27);
+    
     EnigmaReader reader("enigma.ini");
+    if (reader.parseError < 0) {
+        cout << "Error on parsing file, program halted.\n";
+        return -1;
+    }
+    Plugboard plugboard = reader.getPlugboard();
+    vector<Rotor> rotors = reader.getRotors();
+    
+    cout << "Translation on plugboard:\n";
+    cout << plugboard << "\n\n";
+    
+    cout << "Rotors settings: \n";
+    for(int i = 0; i < rotors.size(); i++) {
+        cout << rotors[i] << endl;
+    }
     return 0;
 }
 

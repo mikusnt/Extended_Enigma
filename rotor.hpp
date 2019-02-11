@@ -31,20 +31,37 @@ typedef enum {
     directionRight = 1
 } TranslateDirection;
 
-typedef struct {
-
-    RotorParams();
-    bool areParamsCorrect();
-} RotorParams;
-
 class Rotor {
 private:
+    const string ROTOR_DICT[10][2] = {{ "EKMFLGDQVZNTOWYHXUSPAIBRCJ", "UWYGADFPVZBECKMTHXSLRINQOJ" },
+            { "AJDKSIRUXBLHWTMCQGZNPYFVOE", "AJPCZWRLFBDKOTYUQGENHXMIVS" },
+            { "BDFHJLCPRTXVZNYEIWGAKMUSQO", "TAGBPCSDQEUFVNZHYIXJWLRKOM" },
+            { "ESOVPZJAYQUIRHXLNFTGKDCMWB", "HZWVARTNLGUPXQCEJMBSKDYOIF" },
+            { "VZBRGITYUPSDNHLXAWMJQOFECK", "QCYLXWENFTZOSMVJUDKGIARPHB" },
+            { "JPGVOUMFYQBENHZRDKASXLICTW", "SKXQLHCNWARVGMEBJPTYFDZUIO" },
+            { "NZJHGRCXMYSWBOUFAIVLPEKQDT", "QMGYVPEDRCWTIANUXFKZOSLHJB" },
+            { "FKQHTLXOCBJSPDZRAMEWNIUYGV", "QJINSAYDVKBFRUHMCPLEWZTGXO" },
+            { "LEYJVCNIXWPBQMDRTAKZGFUHOS", "RLFOBVUXHDSANGYKMPZQWEJICT" },
+            { "FSOKANUERHMBTIYCWLQPZXVGJD", "ELPZHAXJNYDRKFCTSIBMGWQVOU" }
+    };
+    const string REFLECTOR_DICT[4] = { 
+        "YRUHQSLDPXNGOKMIEBFZCWVJAT", 
+        "FVPJIAOYEDRZXWGCTKUQSBNMHL", 
+        "ENKQAUYWJICOPBLMDXZVFTHRGS", 
+        "RDOBJNTKVEHMLFCWZAXGYIPSUQ"
+    };
+    
+    const string ROTOR_POS[8] = {"R", "F", "W", "K", "A", "AN", "AN", "AN"};
+    const char ERROR_CHAR = 'X';
+
     RotorType type;
     unsigned int id;
     unsigned int shift;
 public:
-    static const unsigned int BETA_ID = 8;
-    static const unsigned int GAMMA_ID = 9;
+    static const unsigned int BETA_POS = 8;
+    static const unsigned int GAMMA_POS = 9;
+    static const unsigned int DICT_SIZE = 26;
+    
     Rotor(RotorType type, unsigned int id);
     Rotor(RotorType type, unsigned int id, unsigned int position);
     Rotor(const Rotor& rotor);
@@ -54,7 +71,11 @@ public:
     void rotate(unsigned int newPosition);
     bool canNextRotate();
     char translate(char input, TranslateDirection direction);
+
+    friend ostream& operator<<(ostream& os, const Rotor& rotor);
 };
+
+    
 
 #endif /* ROTOR_HPP */
 
