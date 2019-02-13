@@ -14,6 +14,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <conio.h>
+#include <exception>
 #include "rotor.hpp"
 #include "plugboard.hpp"
 #include "enigma_reader.hpp"
@@ -22,14 +23,16 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    
-    EnigmaReader reader("enigma.ini");
-    if (reader.parseError < 0) {
-        cout << "Error on parsing file, program halted.\n";
-        return -1;
+    EnigmaReader *reader;
+    try {
+        //EnigmaReader::writeDefaultFile("new.ini");
+        reader = new EnigmaReader("enigma.ini");
+    } catch (exception& e) {
+        cout << e.what() << endl;     
     }
-    Plugboard plugboard = reader.getPlugboard();
-    vector<Rotor> rotors = reader.getRotors();
+    
+    Plugboard plugboard = reader->getPlugboard();
+    vector<Rotor> rotors = reader->getRotors();
     
     cout << "Translation on plugboard:\n";
     cout << plugboard << "\n\n";
@@ -38,6 +41,7 @@ int main(int argc, char** argv) {
     for(int i = 0; i < rotors.size(); i++) {
         cout << rotors[i] << endl;
     }
+    delete reader;
     return 0;
 }
 

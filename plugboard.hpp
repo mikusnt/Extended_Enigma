@@ -22,7 +22,6 @@ using namespace std;
 class Plugboard {
 private:
     const char ERROR_CHAR = 'X';
-protected:
     const string ORIGINAL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     string actual;
     bool haveDuplicates(string word);

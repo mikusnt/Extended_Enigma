@@ -18,6 +18,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <map>
 
 using namespace std;
 
@@ -33,7 +34,8 @@ typedef enum {
 
 class Rotor {
 private:
-    const string ROTOR_DICT[10][2] = {{ "EKMFLGDQVZNTOWYHXUSPAIBRCJ", "UWYGADFPVZBECKMTHXSLRINQOJ" },
+    const string ROTOR_DICT[10][2] = {
+            { "EKMFLGDQVZNTOWYHXUSPAIBRCJ", "UWYGADFPVZBECKMTHXSLRINQOJ" },
             { "AJDKSIRUXBLHWTMCQGZNPYFVOE", "AJPCZWRLFBDKOTYUQGENHXMIVS" },
             { "BDFHJLCPRTXVZNYEIWGAKMUSQO", "TAGBPCSDQEUFVNZHYIXJWLRKOM" },
             { "ESOVPZJAYQUIRHXLNFTGKDCMWB", "HZWVARTNLGUPXQCEJMBSKDYOIF" },
@@ -51,24 +53,27 @@ private:
         "RDOBJNTKVEHMLFCWZAXGYIPSUQ"
     };
     
-    const string ROTOR_POS[8] = {"R", "F", "W", "K", "A", "AN", "AN", "AN"};
+    const string ROTOR_CHANGE_POS[8] = {"Q", "E", "V", "J", "Z", "ZM", "ZM", "ZM"};
     const char ERROR_CHAR = 'X';
 
     RotorType type;
     unsigned int id;
-    unsigned int shift;
+    unsigned int ringShift;
+    unsigned int position;
+    unsigned short RotaryPos(short position);
+    char RotaryASCII(char sign);
 public:
-    static const unsigned int BETA_POS = 8;
-    static const unsigned int GAMMA_POS = 9;
+    //static const unsigned int BETA_POS = 8;
+    //static const unsigned int GAMMA_POS = 9;
     static const unsigned int DICT_SIZE = 26;
     
     Rotor(RotorType type, unsigned int id);
-    Rotor(RotorType type, unsigned int id, unsigned int position);
+    Rotor(RotorType type, unsigned int id, unsigned int position, unsigned int ringShift);
     Rotor(const Rotor& rotor);
     
     void setType(RotorType type);
-    void rotate();
-    void rotate(unsigned int newPosition);
+    void autoRotate();
+    void rotate(unsigned short newPosition);
     bool canNextRotate();
     char translate(char input, TranslateDirection direction);
 

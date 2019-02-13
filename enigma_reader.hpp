@@ -20,8 +20,19 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <map>
 
 using namespace std;
+
+class EnigmaDicts {
+public:
+    const string regularIDMap[10] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "beta", "gamma" };
+    const string reflectorIDMap[4] = { "B", "C", "B_thin", "C_thin" };
+    const string rotorTypeMap[2] = { "regular", "reflector" };
+    static const int end = -1;
+    
+    unsigned int idMap(const string map[], string value);
+};
 
 class EnigmaReader {
 private:
@@ -32,6 +43,7 @@ private:
     const string TYPE = "type";
 
     const string ID = "id";
+    const string RING_SHIFT = "ring_shift";
     const string POSITION = "position";
     
     const string EMPTY = "_empty";
@@ -41,13 +53,11 @@ private:
     
     bool haveDuplicates();
 public:
-    static const string REGULAR;
-    static const string REFLECTOR;;
-    static const string BETA;
-    static const string GAMMA;
+    
     
     int parseError;
     EnigmaReader(string filename);
+    static void writeDefaultFile(string filename);
     
     Plugboard getPlugboard();
     vector<Rotor> getRotors();
