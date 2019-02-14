@@ -34,9 +34,9 @@ string Rotor::getPositions(vector<Rotor> rotors) {
     return positions.str();
 }
 
-Rotor::Rotor(RotorType type, unsigned int id) : position(0), type(type), id(RotaryPos(id)), ringShift(0) {}
+Rotor::Rotor(RotorType type, unsigned int id) : position(0), type(type), id(RotaryPos(id - 1)), ringShift(0) { }
 
-Rotor::Rotor(RotorType type, unsigned int id, unsigned int ringShift, unsigned int position) : Rotor(type, id - 1) {
+Rotor::Rotor(RotorType type, unsigned int id, unsigned int ringShift, unsigned int position) : Rotor(type, id) {
     this->position = toupper(position) >= 'A' ? toupper(position) - 'A' : position - 1;
     this->ringShift = RotaryPos(toupper(ringShift) >= 'A' ? toupper(ringShift) - 'A' : ringShift - 1);
 }

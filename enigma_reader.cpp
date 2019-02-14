@@ -73,7 +73,8 @@ EnigmaReader::EnigmaReader(string filename) {
     stringstream concat;
     int rotorLimit = 4;
     // rotors
-    for (int i = 0; (temp != EMPTY) && (i < rotorLimit); i++) {
+    int i;
+    for (i = 0; (temp != EMPTY) && (i < rotorLimit); i++) {
         concat << ROTOR << i;
         temp = reader.GetString(concat.str(), TYPE, EMPTY);
         if (temp == EMPTY)
@@ -92,18 +93,21 @@ EnigmaReader::EnigmaReader(string filename) {
         if (type == rotorTypeRegular) {
             id = dicts.idMap(dicts.regularIDMap, temp) + 1;
             // HINT rename equation when changing beta and gamma rotor id
-            if ((id == EnigmaDicts::end) || ((id >= 9) && (rotorLimit == 4) && (i == 1)) || ((id >= 9) && (i != 1)))
+            if ((id == EnigmaDicts::end) 
+                    || ((id >= 9) && (rotorLimit == 4) && (i == 1)) 
+                    || ((id >= 9) && (i != 1))
+                    || ((id < 9) && (rotorLimit == 5) && (i == 1)))
                 throw invalid_argument("bad regular rotor id");
         }
-        
         if (type == rotorTypeReflector) {
-            id = dicts.idMap(dicts.reflectorIDMap, temp);
+            id = dicts.idMap(dicts.reflectorIDMap, temp) + 1;
             if (id == EnigmaDicts::end)
                 throw invalid_argument("bad reflector rotor id");
+                    // HINT rename length of thin reflector name when changing name of thin reflector name
+            if (dicts.reflectorIDMap[id - 1].length() > 1)
+                rotorLimit = 5;
         }
-        // HINT rename length of thin reflector name when changing name of thin reflector name
-        if (dicts.reflectorIDMap[id].length() == 6)
-            rotorLimit = 5;
+
         
         string inputShift = reader.GetString(concat.str(), RING_SHIFT, "1");
         int ringShift = parsePosition(inputShift);
@@ -115,6 +119,9 @@ EnigmaReader::EnigmaReader(string filename) {
         Rotor rotor(type, id, ringShift, position);
         rotors.push_back(rotor);
         concat.str("");
+    }
+    if (i != (rotorLimit)) {
+        throw invalid_argument("incorrect number of rotors");
     }
     rotors.front().setType(rotorTypeReflector);
 }
