@@ -20,9 +20,23 @@ char Rotor::RotaryASCII(char sign) {
     return sign;
 }
 
+string Rotor::getStringPosition(short position) {
+    stringstream temp;
+    temp << position + 1 << "(" << (char)(position + 'A') << ")";
+    return temp.str();
+}
+
+string Rotor::getPositions(vector<Rotor> rotors) {
+    stringstream positions;
+    for (int i = 0; i < rotors.size(); i++) {
+        positions << Rotor::getStringPosition(rotors[i].position) << " ";
+    }
+    return positions.str();
+}
+
 Rotor::Rotor(RotorType type, unsigned int id) : position(0), type(type), id(RotaryPos(id)), ringShift(0) {}
 
-Rotor::Rotor(RotorType type, unsigned int id, unsigned int ringShift, unsigned int position) : Rotor(type, id) {
+Rotor::Rotor(RotorType type, unsigned int id, unsigned int ringShift, unsigned int position) : Rotor(type, id - 1) {
     this->position = toupper(position) >= 'A' ? toupper(position) - 'A' : position - 1;
     this->ringShift = RotaryPos(toupper(ringShift) >= 'A' ? toupper(ringShift) - 'A' : ringShift - 1);
 }
@@ -33,18 +47,22 @@ Rotor::Rotor(const Rotor& rotor)
 void Rotor::setType(RotorType type) { this->type = type; }
 
 void Rotor::autoRotate() {
-    if (id < 8)
+    if ((id < 8) && (type == rotorTypeRegular))
         position = RotaryPos(++position);
 }
 
 void Rotor::rotate(unsigned short newPosition) {
-    this->position = RotaryPos(newPosition);
+    if (type == rotorTypeRegular)
+        this->position = RotaryPos(newPosition);
 }
 
-bool Rotor::canNextRotate() {
-    if ((type == rotorTypeRegular) && (id < 8)) {
-        char toFind = RotaryASCII(position + 65 + 1);
-        if (ROTOR_CHANGE_POS[id].find(toFind))
+bool Rotor::canNextRotate(const Rotor& nextRotor) {
+    if ((type == rotorTypeRegular) 
+            && (id < 8) 
+            && (nextRotor.type == rotorTypeRegular) 
+            && (nextRotor.id < 8)) {
+        char toFind = RotaryASCII(position + 65);
+        if (ROTOR_CHANGE_POS[id].find(toFind) != string::npos)
             return true;
     } else if (type == rotorTypeReflector) {
         // no rotate
@@ -79,12 +97,8 @@ ostream& operator<<(ostream& os, const Rotor& rotor) {
     if (rotor.type == rotorTypeReflector) 
         idS = dicts.reflectorIDMap[rotor.id];  
     
-    stringstream ringShift;
-    stringstream position;
-    ringShift << rotor.ringShift + 1 << "(" << (char)(rotor.ringShift + 'A') << ")";
-    position << rotor.position + 1<< "(" << (char)(rotor.position + 'A') << ")";
 
-    os << "{ type: " << typeS << ", id: " << idS << ", ring shift: " << ringShift.str() << ", position: " << position.str() << " }";
+    os << "{ type: " << typeS << ", id: " << idS << ", ring shift: " <<  Rotor::getStringPosition(rotor.ringShift) << ", position: " << Rotor::getStringPosition(rotor.position) << " }";
     return os;
 }
 

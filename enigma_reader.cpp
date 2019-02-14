@@ -71,8 +71,9 @@ EnigmaReader::EnigmaReader(string filename) {
     }
     
     stringstream concat;
+    int rotorLimit = 4;
     // rotors
-    for (int i = 0; temp != EMPTY; i++) {
+    for (int i = 0; (temp != EMPTY) && (i < rotorLimit); i++) {
         concat << ROTOR << i;
         temp = reader.GetString(concat.str(), TYPE, EMPTY);
         if (temp == EMPTY)
@@ -81,27 +82,34 @@ EnigmaReader::EnigmaReader(string filename) {
         RotorType type = rotorTypeRegular;
         EnigmaDicts dicts;
         type = (RotorType)dicts.idMap(dicts.rotorTypeMap, temp);
-        if (type == EnigmaDicts::end)
+        if ((type == EnigmaDicts::end) 
+            || ((type != rotorTypeReflector) && (i == 0))
+                    || ((type != rotorTypeRegular) && (i > 0)))
             throw invalid_argument("bad rotor type");    
         
         temp = reader.GetString(concat.str(), ID, EMPTY);
-        int id = 0;
+        int id = 1;
         if (type == rotorTypeRegular) {
-            id = dicts.idMap(dicts.regularIDMap, temp);
-            if (id == EnigmaDicts::end)
+            id = dicts.idMap(dicts.regularIDMap, temp) + 1;
+            // HINT rename equation when changing beta and gamma rotor id
+            if ((id == EnigmaDicts::end) || ((id >= 9) && (rotorLimit == 4) && (i == 1)) || ((id >= 9) && (i != 1)))
                 throw invalid_argument("bad regular rotor id");
         }
         
         if (type == rotorTypeReflector) {
             id = dicts.idMap(dicts.reflectorIDMap, temp);
             if (id == EnigmaDicts::end)
-                throw invalid_argument("ebad reflector rotor id");
+                throw invalid_argument("bad reflector rotor id");
         }
-        string inputShift = reader.GetString(concat.str(), RING_SHIFT, "0");
+        // HINT rename length of thin reflector name when changing name of thin reflector name
+        if (dicts.reflectorIDMap[id].length() == 6)
+            rotorLimit = 5;
+        
+        string inputShift = reader.GetString(concat.str(), RING_SHIFT, "1");
         int ringShift = parsePosition(inputShift);
         
         //int ringShift = reader.GetInteger(concat.str(), RING_SHIFT, 0) % Rotor::DICT_SIZE;
-        string inputPosition = reader.GetString(concat.str(), POSITION, "0");
+        string inputPosition = reader.GetString(concat.str(), POSITION, "1");
         int position = parsePosition(inputPosition);
         
         Rotor rotor(type, id, ringShift, position);

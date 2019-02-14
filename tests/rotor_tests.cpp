@@ -52,7 +52,7 @@ void testTranslateIFY() {
 }
 
 int main(int argc, char** argv) {
-    std::cout << "%SUITE_STARTING% rotor_tests" << std::endl;
+    std::cout << "%SUITE_STARTED% rotor_tests" << std::endl;
 
     std::cout << "%TEST_STARTED% testTranslate I AA (rotor_tests)" << std::endl;
     testTranslateIAA();
@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
     testTranslateIFY();
     std::cout << "%TEST_FINISHED% testTranslate I FY (rotor_tests)" << std::endl;
 
-    std::cout << "%SUITE_FINISING% rotor_tests" << std::endl;
+    std::cout << "%SUITE_FINISHED% rotor_tests" << std::endl;
     return (EXIT_SUCCESS);
 }
 

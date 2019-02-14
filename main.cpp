@@ -15,8 +15,7 @@
 #include <cstdlib>
 #include <conio.h>
 #include <exception>
-#include "rotor.hpp"
-#include "plugboard.hpp"
+#include "enigma.hpp"
 #include "enigma_reader.hpp"
 
 

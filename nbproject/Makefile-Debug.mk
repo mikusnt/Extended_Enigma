@@ -37,6 +37,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/_ext/a4ed2b29/INIReader.o \
 	${OBJECTDIR}/_ext/a4ed2b29/ini.o \
+	${OBJECTDIR}/enigma.o \
 	${OBJECTDIR}/enigma_reader.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/plugboard.o \
@@ -47,10 +48,12 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
+	${TESTDIR}/TestFiles/f2 \
 	${TESTDIR}/TestFiles/f1
 
 # Test Object Files
 TESTOBJECTFILES= \
+	${TESTDIR}/tests/rotate_tests.o \
 	${TESTDIR}/tests/rotor_tests.o
 
 # C Compiler Flags
@@ -87,6 +90,11 @@ ${OBJECTDIR}/_ext/a4ed2b29/ini.o: ../config_files/ini.c
 	${RM} "$@.d"
 	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/a4ed2b29/ini.o ../config_files/ini.c
 
+${OBJECTDIR}/enigma.o: enigma.cpp
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/enigma.o enigma.cpp
+
 ${OBJECTDIR}/enigma_reader.o: enigma_reader.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -114,9 +122,19 @@ ${OBJECTDIR}/rotor.o: rotor.cpp
 .build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
 .build-tests-subprojects:
 
+${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/rotate_tests.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} -static-libgcc -static-libstdc++  
+
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/rotor_tests.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.cc} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} -static-libgcc -static-libstdc++  
+
+
+${TESTDIR}/tests/rotate_tests.o: tests/rotate_tests.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/rotate_tests.o tests/rotate_tests.cpp
 
 
 ${TESTDIR}/tests/rotor_tests.o: tests/rotor_tests.cpp 
@@ -149,6 +167,19 @@ ${OBJECTDIR}/_ext/a4ed2b29/ini_nomain.o: ${OBJECTDIR}/_ext/a4ed2b29/ini.o ../con
 	    $(COMPILE.c) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/a4ed2b29/ini_nomain.o ../config_files/ini.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/_ext/a4ed2b29/ini.o ${OBJECTDIR}/_ext/a4ed2b29/ini_nomain.o;\
+	fi
+
+${OBJECTDIR}/enigma_nomain.o: ${OBJECTDIR}/enigma.o enigma.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/enigma.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/enigma_nomain.o enigma.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/enigma.o ${OBJECTDIR}/enigma_nomain.o;\
 	fi
 
 ${OBJECTDIR}/enigma_reader_nomain.o: ${OBJECTDIR}/enigma_reader.o enigma_reader.cpp 
@@ -207,6 +238,7 @@ ${OBJECTDIR}/rotor_nomain.o: ${OBJECTDIR}/rotor.o rotor.cpp
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
 	then  \
+	    ${TESTDIR}/TestFiles/f2 || true; \
 	    ${TESTDIR}/TestFiles/f1 || true; \
 	else  \
 	    ./${TEST} || true; \

@@ -19,6 +19,7 @@
 #include <vector>
 #include <iostream>
 #include <map>
+#include <sstream>
 
 using namespace std;
 
@@ -62,7 +63,11 @@ private:
     unsigned int position;
     unsigned short RotaryPos(short position);
     char RotaryASCII(char sign);
+protected:
+    
 public:
+    static string getStringPosition(short position);
+    static string getPositions(vector<Rotor> rotors);
     //static const unsigned int BETA_POS = 8;
     //static const unsigned int GAMMA_POS = 9;
     static const int DICT_SIZE = 26;
@@ -74,8 +79,9 @@ public:
     void setType(RotorType type);
     void autoRotate();
     void rotate(unsigned short newPosition);
-    bool canNextRotate();
+    bool canNextRotate(const Rotor& nextRotor);
     char translate(char input, TranslateDirection direction);
+
 
     friend ostream& operator<<(ostream& os, const Rotor& rotor);
 };
