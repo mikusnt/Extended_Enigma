@@ -58,10 +58,17 @@ char Plugboard::translate(char input) {
 }
 
 ostream& operator<<(ostream& os, const Plugboard& plugboard) {
-    os << plugboard.ORIGINAL << endl;
+    for (int i = 0; i < Rotor::DICT_SIZE; i++)
+        if ((plugboard.actual[i] != plugboard.ORIGINAL[i]) && (plugboard.actual[i] > (i + 'A')))
+            os << plugboard.ORIGINAL[i] << " ";
+    os << endl;
     for(int i = 0; i < Rotor::DICT_SIZE; i++)
-        os << "|";
-    os << endl << plugboard.actual;
+        if ((plugboard.actual[i] != plugboard.ORIGINAL[i]) && (plugboard.actual[i] > (i + 'A')))
+            os << "| ";
+    os << endl;
+    for (int i = 0; i < Rotor::DICT_SIZE; i++)
+        if ((plugboard.actual[i] != plugboard.ORIGINAL[i]) && (plugboard.actual[i] > (i + 'A')))    
+            os << plugboard.actual[i]<< " ";
     return os;
 }
 

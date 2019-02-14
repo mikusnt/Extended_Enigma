@@ -8,7 +8,7 @@
 #include "enigma_reader.hpp"
 
  unsigned short Rotor::RotaryPos(short position) {
-    while (position >= DICT_SIZE) position -= DICT_SIZE;
+    while (position >= (short)DICT_SIZE) position -= DICT_SIZE;
     while (position < 0) position += DICT_SIZE;
     return position;
 }
@@ -20,11 +20,11 @@ char Rotor::RotaryASCII(char sign) {
     return sign;
 }
 
-Rotor::Rotor(RotorType type, unsigned int id) : position(0), type(type), id(RotaryPos(id)) {}
+Rotor::Rotor(RotorType type, unsigned int id) : position(0), type(type), id(RotaryPos(id)), ringShift(0) {}
 
-Rotor::Rotor(RotorType type, unsigned int id, unsigned int poosition, unsigned int ringShift) : Rotor(type, id) {
-    this->position = poosition;
-    this->ringShift = RotaryPos(ringShift);
+Rotor::Rotor(RotorType type, unsigned int id, unsigned int ringShift, unsigned int position) : Rotor(type, id) {
+    this->position = toupper(position) >= 'A' ? toupper(position) - 'A' : position - 1;
+    this->ringShift = RotaryPos(toupper(ringShift) >= 'A' ? toupper(ringShift) - 'A' : ringShift - 1);
 }
 
 Rotor::Rotor(const Rotor& rotor) 
@@ -57,10 +57,10 @@ char Rotor::translate(char input, TranslateDirection direction) {
     //    shift = (++shift % DICT_SIZE);
     input = toupper(input);
     if (type == rotorTypeRegular) {
-        if ((input >= 'A') && (input <= 'Z')) return RotaryASCII(ROTOR_DICT[id][direction][RotaryPos(input - 65 + position)] - position);
+        if ((input >= 'A') && (input <= 'Z')) return RotaryASCII(ROTOR_DICT[id][direction][RotaryPos(input - 'A' + position - ringShift)] - position + ringShift);
         else return ERROR_CHAR;
     } else if (type == rotorTypeReflector) {
-        if ((input >= 'A') && (input <= 'Z')) return RotaryASCII(REFLECTOR_DICT[id][RotaryPos(input - 65 + position)] - position);
+        if ((input >= 'A') && (input <= 'Z')) return RotaryASCII(REFLECTOR_DICT[id][RotaryPos(input - 'A' + position - ringShift)] - position + ringShift);
         else return ERROR_CHAR;
     }
     /*
@@ -73,12 +73,18 @@ ostream& operator<<(ostream& os, const Rotor& rotor) {
     EnigmaDicts dicts;
     string typeS = dicts.rotorTypeMap[rotor.type];
     string idS;// = (id == Rotor::BETA_POS ? id = EnigmaReader::BETA : (id == Rotor::GAMMA_POS ? id = EnigmaReader::GAMMA : to_string(id)));
+    
     if (rotor.type == rotorTypeRegular) 
         idS = dicts.regularIDMap[rotor.id];
     if (rotor.type == rotorTypeReflector) 
-        idS = dicts.reflectorIDMap[rotor.id];    
+        idS = dicts.reflectorIDMap[rotor.id];  
+    
+    stringstream ringShift;
+    stringstream position;
+    ringShift << rotor.ringShift + 1 << "(" << (char)(rotor.ringShift + 'A') << ")";
+    position << rotor.position + 1<< "(" << (char)(rotor.position + 'A') << ")";
 
-    os << "{ type: " << typeS << ", id: " << idS << ", ring shift: " << rotor.ringShift << ", position: " << rotor.position << " }";
+    os << "{ type: " << typeS << ", id: " << idS << ", ring shift: " << ringShift.str() << ", position: " << position.str() << " }";
     return os;
 }
 

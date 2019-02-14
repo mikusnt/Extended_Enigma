@@ -65,10 +65,10 @@ private:
 public:
     //static const unsigned int BETA_POS = 8;
     //static const unsigned int GAMMA_POS = 9;
-    static const unsigned int DICT_SIZE = 26;
+    static const int DICT_SIZE = 26;
     
     Rotor(RotorType type, unsigned int id);
-    Rotor(RotorType type, unsigned int id, unsigned int position, unsigned int ringShift);
+    Rotor(RotorType type, unsigned int id, unsigned int ringShift, unsigned int position);
     Rotor(const Rotor& rotor);
     
     void setType(RotorType type);

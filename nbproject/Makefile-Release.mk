@@ -42,6 +42,16 @@ OBJECTFILES= \
 	${OBJECTDIR}/plugboard.o \
 	${OBJECTDIR}/rotor.o
 
+# Test Directory
+TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
+
+# Test Files
+TESTFILES= \
+	${TESTDIR}/TestFiles/f1
+
+# Test Object Files
+TESTOBJECTFILES= \
+	${TESTDIR}/tests/rotor_tests.o
 
 # C Compiler Flags
 CFLAGS=
@@ -99,6 +109,108 @@ ${OBJECTDIR}/rotor.o: rotor.cpp
 
 # Subprojects
 .build-subprojects:
+
+# Build Test Targets
+.build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
+.build-tests-subprojects:
+
+${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/rotor_tests.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   
+
+
+${TESTDIR}/tests/rotor_tests.o: tests/rotor_tests.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/rotor_tests.o tests/rotor_tests.cpp
+
+
+${OBJECTDIR}/_ext/a4ed2b29/INIReader_nomain.o: ${OBJECTDIR}/_ext/a4ed2b29/INIReader.o ../config_files/INIReader.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/a4ed2b29
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/a4ed2b29/INIReader.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/a4ed2b29/INIReader_nomain.o ../config_files/INIReader.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/_ext/a4ed2b29/INIReader.o ${OBJECTDIR}/_ext/a4ed2b29/INIReader_nomain.o;\
+	fi
+
+${OBJECTDIR}/_ext/a4ed2b29/ini_nomain.o: ${OBJECTDIR}/_ext/a4ed2b29/ini.o ../config_files/ini.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/a4ed2b29
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/a4ed2b29/ini.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/a4ed2b29/ini_nomain.o ../config_files/ini.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/_ext/a4ed2b29/ini.o ${OBJECTDIR}/_ext/a4ed2b29/ini_nomain.o;\
+	fi
+
+${OBJECTDIR}/enigma_reader_nomain.o: ${OBJECTDIR}/enigma_reader.o enigma_reader.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/enigma_reader.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/enigma_reader_nomain.o enigma_reader.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/enigma_reader.o ${OBJECTDIR}/enigma_reader_nomain.o;\
+	fi
+
+${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/main.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main_nomain.o main.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/main.o ${OBJECTDIR}/main_nomain.o;\
+	fi
+
+${OBJECTDIR}/plugboard_nomain.o: ${OBJECTDIR}/plugboard.o plugboard.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/plugboard.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/plugboard_nomain.o plugboard.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/plugboard.o ${OBJECTDIR}/plugboard_nomain.o;\
+	fi
+
+${OBJECTDIR}/rotor_nomain.o: ${OBJECTDIR}/rotor.o rotor.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/rotor.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.cc) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/rotor_nomain.o rotor.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/rotor.o ${OBJECTDIR}/rotor_nomain.o;\
+	fi
+
+# Run Test Targets
+.test-conf:
+	@if [ "${TEST}" = "" ]; \
+	then  \
+	    ${TESTDIR}/TestFiles/f1 || true; \
+	else  \
+	    ./${TEST} || true; \
+	fi
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}

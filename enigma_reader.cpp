@@ -5,8 +5,8 @@
  */
 
 
-#include <regex>
 #include <fstream>
+#include <sstream>
 
 #include "enigma_reader.hpp"
 
@@ -25,6 +25,20 @@ unsigned int EnigmaDicts::idMap(const string map[], string value) {
             return i;
     }
     return EnigmaDicts::end;
+}
+
+unsigned int EnigmaReader::parsePosition(string pos) {
+    unsigned int output = 0;
+    char first = toupper(pos[0]);
+    if ((first >= 'A') && (first <= 'Z')) {
+        output = first - 'A' + 1;
+    } else {
+        stringstream conv(pos);
+        conv >> output;
+        while (output > (Rotor::DICT_SIZE)) output -= Rotor::DICT_SIZE;
+        while (output < 1) output += Rotor::DICT_SIZE;
+    }
+    return output;
 }
 
 EnigmaReader::EnigmaReader(string filename) {
@@ -83,16 +97,18 @@ EnigmaReader::EnigmaReader(string filename) {
             if (id == EnigmaDicts::end)
                 throw invalid_argument("ebad reflector rotor id");
         }
+        string inputShift = reader.GetString(concat.str(), RING_SHIFT, "0");
+        int ringShift = parsePosition(inputShift);
         
-        int ringShift = reader.GetInteger(concat.str(), RING_SHIFT, 0 % Rotor::DICT_SIZE);
-        int position = reader.GetInteger(concat.str(), POSITION, 0) % Rotor::DICT_SIZE;
+        //int ringShift = reader.GetInteger(concat.str(), RING_SHIFT, 0) % Rotor::DICT_SIZE;
+        string inputPosition = reader.GetString(concat.str(), POSITION, "0");
+        int position = parsePosition(inputPosition);
         
-        Rotor rotor(type, id, position, ringShift);
+        Rotor rotor(type, id, ringShift, position);
         rotors.push_back(rotor);
         concat.str("");
     }
-    rotors.back().setType(rotorTypeReflector);
-    
+    rotors.front().setType(rotorTypeReflector);
 }
 
 void EnigmaReader::writeDefaultFile(string filename) {

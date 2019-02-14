@@ -52,6 +52,7 @@ private:
     vector<Rotor> rotors;
     
     bool haveDuplicates();
+    unsigned int parsePosition(string pos);
 public:
     
     
