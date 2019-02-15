@@ -4,6 +4,8 @@
  * and open the template in the editor.
  */
 
+#include <typeinfo>
+
 #include "rotor.hpp"
 #include "enigma_reader.hpp"
 
@@ -28,13 +30,17 @@ string Rotor::getStringPosition(short position) {
 
 string Rotor::getPositions(vector<Rotor> rotors) {
     stringstream positions;
-    for (int i = 0; i < rotors.size(); i++) {
+    for (int i = 0; i < rotors.size() - 1; i++) {
         positions << Rotor::getStringPosition(rotors[i].position) << " ";
     }
+    positions << Rotor::getStringPosition(rotors.back().position);
     return positions.str();
 }
 
-Rotor::Rotor(RotorType type, unsigned int id) : position(0), type(type), id(RotaryPos(id - 1)), ringShift(0) { }
+Rotor::Rotor(RotorType type, unsigned int id) : position(0), type(type), id(id - 1), ringShift(0) {
+    if ((id < 1) || (id > 10))
+        throw out_of_range("id out of range");
+}
 
 Rotor::Rotor(RotorType type, unsigned int id, unsigned int ringShift, unsigned int position) : Rotor(type, id) {
     this->position = toupper(position) >= 'A' ? toupper(position) - 'A' : position - 1;

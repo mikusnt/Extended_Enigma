@@ -4,10 +4,10 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>../config_files/INIReader.h</itemPath>
+      <itemPath>INIReader.h</itemPath>
       <itemPath>enigma.hpp</itemPath>
       <itemPath>enigma_reader.hpp</itemPath>
-      <itemPath>../config_files/ini.h</itemPath>
+      <itemPath>ini.h</itemPath>
       <itemPath>plugboard.hpp</itemPath>
       <itemPath>rotor.hpp</itemPath>
     </logicalFolder>
@@ -18,10 +18,10 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>../config_files/INIReader.cpp</itemPath>
+      <itemPath>INIReader.cpp</itemPath>
       <itemPath>enigma.cpp</itemPath>
       <itemPath>enigma_reader.cpp</itemPath>
-      <itemPath>../config_files/ini.c</itemPath>
+      <itemPath>ini.c</itemPath>
       <itemPath>main.cpp</itemPath>
       <itemPath>plugboard.cpp</itemPath>
       <itemPath>rotor.cpp</itemPath>
@@ -63,13 +63,9 @@
           <commandLine>-static-libgcc -static-libstdc++</commandLine>
         </linkerTool>
       </compileType>
-      <item path="../config_files/INIReader.cpp" ex="false" tool="1" flavor2="0">
+      <item path="INIReader.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="../config_files/INIReader.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../config_files/ini.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../config_files/ini.h" ex="false" tool="3" flavor2="0">
+      <item path="INIReader.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="enigma.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -114,6 +110,10 @@
           <output>${TESTDIR}/TestFiles/f2</output>
         </linkerTool>
       </folder>
+      <item path="ini.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ini.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="plugboard.cpp" ex="false" tool="1" flavor2="0">
@@ -149,13 +149,9 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="../config_files/INIReader.cpp" ex="false" tool="1" flavor2="0">
+      <item path="INIReader.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="../config_files/INIReader.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../config_files/ini.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../config_files/ini.h" ex="false" tool="3" flavor2="0">
+      <item path="INIReader.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="enigma.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -195,6 +191,10 @@
           <output>${TESTDIR}/TestFiles/f2</output>
         </linkerTool>
       </folder>
+      <item path="ini.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ini.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="plugboard.cpp" ex="false" tool="1" flavor2="0">

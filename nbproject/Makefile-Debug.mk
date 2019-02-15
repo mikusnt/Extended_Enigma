@@ -35,10 +35,10 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/a4ed2b29/INIReader.o \
-	${OBJECTDIR}/_ext/a4ed2b29/ini.o \
+	${OBJECTDIR}/INIReader.o \
 	${OBJECTDIR}/enigma.o \
 	${OBJECTDIR}/enigma_reader.o \
+	${OBJECTDIR}/ini.o \
 	${OBJECTDIR}/main.o \
 	${OBJECTDIR}/plugboard.o \
 	${OBJECTDIR}/rotor.o
@@ -80,15 +80,10 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/extended_enigma.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/extended_enigma ${OBJECTFILES} ${LDLIBSOPTIONS} -static-libgcc -static-libstdc++
 
-${OBJECTDIR}/_ext/a4ed2b29/INIReader.o: ../config_files/INIReader.cpp
-	${MKDIR} -p ${OBJECTDIR}/_ext/a4ed2b29
+${OBJECTDIR}/INIReader.o: INIReader.cpp
+	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/a4ed2b29/INIReader.o ../config_files/INIReader.cpp
-
-${OBJECTDIR}/_ext/a4ed2b29/ini.o: ../config_files/ini.c
-	${MKDIR} -p ${OBJECTDIR}/_ext/a4ed2b29
-	${RM} "$@.d"
-	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/a4ed2b29/ini.o ../config_files/ini.c
+	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/INIReader.o INIReader.cpp
 
 ${OBJECTDIR}/enigma.o: enigma.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -99,6 +94,11 @@ ${OBJECTDIR}/enigma_reader.o: enigma_reader.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/enigma_reader.o enigma_reader.cpp
+
+${OBJECTDIR}/ini.o: ini.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ini.o ini.c
 
 ${OBJECTDIR}/main.o: main.cpp
 	${MKDIR} -p ${OBJECTDIR}
@@ -143,30 +143,17 @@ ${TESTDIR}/tests/rotor_tests.o: tests/rotor_tests.cpp
 	$(COMPILE.cc) -g -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/rotor_tests.o tests/rotor_tests.cpp
 
 
-${OBJECTDIR}/_ext/a4ed2b29/INIReader_nomain.o: ${OBJECTDIR}/_ext/a4ed2b29/INIReader.o ../config_files/INIReader.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/a4ed2b29
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/a4ed2b29/INIReader.o`; \
+${OBJECTDIR}/INIReader_nomain.o: ${OBJECTDIR}/INIReader.o INIReader.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/INIReader.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/a4ed2b29/INIReader_nomain.o ../config_files/INIReader.cpp;\
+	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/INIReader_nomain.o INIReader.cpp;\
 	else  \
-	    ${CP} ${OBJECTDIR}/_ext/a4ed2b29/INIReader.o ${OBJECTDIR}/_ext/a4ed2b29/INIReader_nomain.o;\
-	fi
-
-${OBJECTDIR}/_ext/a4ed2b29/ini_nomain.o: ${OBJECTDIR}/_ext/a4ed2b29/ini.o ../config_files/ini.c 
-	${MKDIR} -p ${OBJECTDIR}/_ext/a4ed2b29
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/_ext/a4ed2b29/ini.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/a4ed2b29/ini_nomain.o ../config_files/ini.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/_ext/a4ed2b29/ini.o ${OBJECTDIR}/_ext/a4ed2b29/ini_nomain.o;\
+	    ${CP} ${OBJECTDIR}/INIReader.o ${OBJECTDIR}/INIReader_nomain.o;\
 	fi
 
 ${OBJECTDIR}/enigma_nomain.o: ${OBJECTDIR}/enigma.o enigma.cpp 
@@ -193,6 +180,19 @@ ${OBJECTDIR}/enigma_reader_nomain.o: ${OBJECTDIR}/enigma_reader.o enigma_reader.
 	    $(COMPILE.cc) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/enigma_reader_nomain.o enigma_reader.cpp;\
 	else  \
 	    ${CP} ${OBJECTDIR}/enigma_reader.o ${OBJECTDIR}/enigma_reader_nomain.o;\
+	fi
+
+${OBJECTDIR}/ini_nomain.o: ${OBJECTDIR}/ini.o ini.c 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/ini.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -g -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ini_nomain.o ini.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/ini.o ${OBJECTDIR}/ini_nomain.o;\
 	fi
 
 ${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp 

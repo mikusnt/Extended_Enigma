@@ -33,37 +33,37 @@ void testRotateDS_KDO() {
         
         results = enigma.translate('A');
         positions = Rotor::getPositions(enigma.rotors);
-        if (positions != "1(A) 11(K) 4(D) 16(P) ") {
+        if (positions != "1(A) 11(K) 4(D) 16(P)") {
             std::cout << "%TEST_FAILED% -------------------- I KDO to I KDP on result=" << positions << std::endl;
         }
         
         results = enigma.translate('A');
         positions = Rotor::getPositions(enigma.rotors);
-        if (positions != "1(A) 11(K) 4(D) 17(Q) ") {
+        if (positions != "1(A) 11(K) 4(D) 17(Q)") {
             std::cout << "%TEST_FAILED% -------------------- I KDP to I KDQ on result=" << positions << std::endl;
         }
         
         results = enigma.translate('A');
         positions = Rotor::getPositions(enigma.rotors);
-        if (positions != "1(A) 11(K) 5(E) 18(R) ") {
+        if (positions != "1(A) 11(K) 5(E) 18(R)") {
             std::cout << "%TEST_FAILED% -------------------- I KDQ to I KER on result=" << positions << std::endl;
         }
         
         results = enigma.translate('A');
         positions = Rotor::getPositions(enigma.rotors);
-        if (positions != "1(A) 12(L) 6(F) 19(S) ") {
+        if (positions != "1(A) 12(L) 6(F) 19(S)") {
             std::cout << "%TEST_FAILED% -------------------- I KER to I LFS on result=" << positions << std::endl;
         }
         
         results = enigma.translate('A');
         positions = Rotor::getPositions(enigma.rotors);
-        if (positions != "1(A) 12(L) 6(F) 20(T) ") {
+        if (positions != "1(A) 12(L) 6(F) 20(T)") {
             std::cout << "%TEST_FAILED% -------------------- I LFS to I LFT on result=" << positions << std::endl;
         }
         
         results = enigma.translate('A');
         positions = Rotor::getPositions(enigma.rotors);
-        if (positions != "1(A) 12(L) 6(F) 21(U) ") {
+        if (positions != "1(A) 12(L) 6(F) 21(U)") {
             std::cout << "%TEST_FAILED% -------------------- I LFT to I LFU on result=" << positions << std::endl;
         }
     } catch (exception& e) {
@@ -84,37 +84,37 @@ void testRotateDS_UDO() {
         
         results = enigma.translate('A');
         positions = Rotor::getPositions(enigma.rotors);
-        if (positions != "1(A) 21(U) 4(D) 16(P) ") {
+        if (positions != "1(A) 21(U) 4(D) 16(P)") {
             std::cout << "%TEST_FAILED% -------------------- I UDO to I UDP on result=" << positions << std::endl;
         }
         
         results = enigma.translate('A');
         positions = Rotor::getPositions(enigma.rotors);
-        if (positions != "1(A) 21(U) 4(D) 17(Q) ") {
+        if (positions != "1(A) 21(U) 4(D) 17(Q)") {
             std::cout << "%TEST_FAILED% -------------------- I UDP to I UDQ on result=" << positions << std::endl;
         }
         
         results = enigma.translate('A');
         positions = Rotor::getPositions(enigma.rotors);
-        if (positions != "1(A) 21(U) 5(E) 18(R) ") {
+        if (positions != "1(A) 21(U) 5(E) 18(R)") {
             std::cout << "%TEST_FAILED% -------------------- I UDQ to I UER on result=" << positions << std::endl;
         }
         
         results = enigma.translate('A');
         positions = Rotor::getPositions(enigma.rotors);
-        if (positions != "1(A) 22(V) 6(F) 19(S) ") {
+        if (positions != "1(A) 22(V) 6(F) 19(S)") {
             std::cout << "%TEST_FAILED% -------------------- I UER to I VFS on result=" << positions << std::endl;
         }
         
         results = enigma.translate('A');
         positions = Rotor::getPositions(enigma.rotors);
-        if (positions != "1(A) 22(V) 6(F) 20(T) ") {
+        if (positions != "1(A) 22(V) 6(F) 20(T)") {
             std::cout << "%TEST_FAILED% -------------------- I VFS to I VFT on result=" << positions << std::endl;
         }
         
         results = enigma.translate('A');
         positions = Rotor::getPositions(enigma.rotors);
-        if (positions != "1(A) 22(V) 6(F) 21(U) ") {
+        if (positions != "1(A) 22(V) 6(F) 21(U)") {
             std::cout << "%TEST_FAILED% -------------------- I VFT to I VFU on result=" << positions << std::endl;
         }
     } catch (exception& e) {

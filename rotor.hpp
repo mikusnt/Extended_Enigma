@@ -20,6 +20,7 @@
 #include <iostream>
 #include <map>
 #include <sstream>
+#include <exception>
 
 using namespace std;
 
@@ -67,6 +68,7 @@ protected:
     
 public:
     static string getStringPosition(short position);
+    unsigned int getPosition() { return position; }
     static string getPositions(vector<Rotor> rotors);
     //static const unsigned int BETA_POS = 8;
     //static const unsigned int GAMMA_POS = 9;
