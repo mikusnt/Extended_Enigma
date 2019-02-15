@@ -30,6 +30,7 @@ public:
     const string reflectorIDMap[4] = { "B", "C", "B_thin", "C_thin" };
     const string rotorTypeMap[2] = { "regular", "reflector" };
     static const int end = -1;
+    static const int REFLECTOR_THIN_SIZE = 6;
     
     unsigned int idMap(const string map[], string value);
 };
@@ -47,17 +48,21 @@ private:
     const string POSITION = "position";
     
     const string EMPTY = "_empty";
-    
+    const int REGULAR_ROTORS_NUM = 4;
+    const int THIN_ROTOR_NUM = 5;
+   
+    string filename;
     Plugboard plugboard;
     vector<Rotor> rotors;
+    bool parsed;
     
     bool haveDuplicates();
     unsigned int parsePosition(string pos);
 public:
-    
-    
-    int parseError;
+    EnigmaReader() {}
     EnigmaReader(string filename);
+    bool wasParsed() const { return parsed; }
+    bool tryParseFile(string filename);
     static void writeDefaultFile(string filename);
     
     Plugboard getPlugboard();

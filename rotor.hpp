@@ -64,19 +64,29 @@ private:
     unsigned int position;
     unsigned short RotaryPos(short position);
     char RotaryASCII(char sign);
+    
+    string positionFormat(int value) const;
 protected:
     
 public:
-    static string getStringPosition(short position);
-    unsigned int getPosition() { return position; }
-    static string getPositions(vector<Rotor> rotors);
-    //static const unsigned int BETA_POS = 8;
+    static const  int MAX_INPUT_BETA_ID = 9;
+    static const  int MAX_INPUT_GAMMA_ID = 10;
+    static const int MEX_INPUT_REFLECTOR_ID = 4;
     //static const unsigned int GAMMA_POS = 9;
     static const int DICT_SIZE = 26;
     
     Rotor(RotorType type, unsigned int id);
     Rotor(RotorType type, unsigned int id, unsigned int ringShift, unsigned int position);
     Rotor(const Rotor& rotor);
+    
+    int getPosition() const { return position; }
+    int setPosition(int newPosition);
+    string getStringPosition() const { return positionFormat(position); }
+    
+    int getRingShift() const { return ringShift; }
+    string getStringRingShift() const { return positionFormat(ringShift); }
+    
+    static string getPositions(vector<Rotor> rotors);
     
     void setType(RotorType type);
     void autoRotate();

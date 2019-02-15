@@ -16,6 +16,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -27,7 +28,8 @@ private:
     bool haveDuplicates(string word);
 public:
     Plugboard();
-    //Plugboard(string rules);
+    Plugboard(string rules);
+    void clear() { actual = ORIGINAL; }
     bool addConnect(char input, char output);
     bool removeConnect(char input);
     char translate(char input);

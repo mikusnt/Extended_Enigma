@@ -15,6 +15,7 @@
 #include <cstdlib>
 #include <conio.h>
 #include <exception>
+#include <fstream>
 #include "enigma.hpp"
 #include "enigma_reader.hpp"
 
@@ -22,25 +23,30 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-    EnigmaReader *reader;
-    try {
-        //EnigmaReader::writeDefaultFile("new.ini");
-        reader = new EnigmaReader("enigma.ini");
-    } catch (exception& e) {
-        cout << e.what() << endl;     
+    const string FILENAME = "enigma.ini";
+    const string DEFAULT_FILENAME = "default.ini";
+    EnigmaReader reader;
+
+    if (!reader.tryParseFile("enigma.ini")) {
+        cout << "Cannot parse " << FILENAME << ", trying with " << DEFAULT_FILENAME << endl;
+        EnigmaReader::writeDefaultFile("default.ini");
+        reader.tryParseFile("default.ini");
     }
     
-    Plugboard plugboard = reader->getPlugboard();
-    vector<Rotor> rotors = reader->getRotors();
-    
-    cout << "Translation on plugboard:\n";
-    cout << plugboard << "\n\n";
-    
-    cout << "Rotors settings: \n";
-    for(int i = 0; i < rotors.size(); i++) {
-        cout << rotors[i] << endl;
+    if (reader.wasParsed()) {
+        Plugboard plugboard = reader.getPlugboard();
+        vector<Rotor> rotors = reader.getRotors();
+
+        cout << "Translation on plugboard:\n";
+        cout << plugboard << "\n\n";
+
+        cout << "Rotors settings: \n";
+        for(int i = 0; i < rotors.size(); i++) {
+            cout << rotors[i] << endl;
+        }
+    } else {
+        cout << "Error on parsing " << FILENAME << " and later " << DEFAULT_FILENAME << endl;
     }
-    delete reader;
     return 0;
 }
 

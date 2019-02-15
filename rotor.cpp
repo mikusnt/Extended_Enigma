@@ -22,18 +22,18 @@ char Rotor::RotaryASCII(char sign) {
     return sign;
 }
 
-string Rotor::getStringPosition(short position) {
+string Rotor::positionFormat(int value) const {
     stringstream temp;
-    temp << position + 1 << "(" << (char)(position + 'A') << ")";
+    temp << value + 1 << "(" << (char)(value + 'A') << ")";
     return temp.str();
 }
 
 string Rotor::getPositions(vector<Rotor> rotors) {
     stringstream positions;
     for (int i = 0; i < rotors.size() - 1; i++) {
-        positions << Rotor::getStringPosition(rotors[i].position) << " ";
+        positions << rotors[i].getStringPosition() << " ";
     }
-    positions << Rotor::getStringPosition(rotors.back().position);
+    positions << rotors.back().getStringPosition();
     return positions.str();
 }
 
@@ -49,6 +49,11 @@ Rotor::Rotor(RotorType type, unsigned int id, unsigned int ringShift, unsigned i
 
 Rotor::Rotor(const Rotor& rotor) 
 : position(rotor.position), type(rotor.type), id(rotor.id), ringShift(rotor.ringShift) {}
+
+int Rotor::setPosition(int newPosition) {
+   this->position = RotaryPos(newPosition);
+   return this->position;
+}
 
 void Rotor::setType(RotorType type) { this->type = type; }
 
@@ -104,7 +109,7 @@ ostream& operator<<(ostream& os, const Rotor& rotor) {
         idS = dicts.reflectorIDMap[rotor.id];  
     
 
-    os << "{ type: " << typeS << ", id: " << idS << ", ring shift: " <<  Rotor::getStringPosition(rotor.ringShift) << ", position: " << Rotor::getStringPosition(rotor.position) << " }";
+    os << "{ type: " << typeS << ", id: " << idS << ", ring shift: " <<  rotor.getStringRingShift() << ", position: " << rotor.getStringPosition() << " }";
     return os;
 }
 

@@ -9,6 +9,7 @@
 #include <sstream>
 
 #include "enigma_reader.hpp"
+#include "enigma.hpp"
 
 unsigned int EnigmaDicts::idMap(const string map[], string value) {
     int length;
@@ -42,39 +43,44 @@ unsigned int EnigmaReader::parsePosition(string pos) {
 }
 
 EnigmaReader::EnigmaReader(string filename) {
+    tryParseFile(filename);
+}
+
+bool EnigmaReader::tryParseFile(string filename) {
+    this->filename = filename;
+    parsed = false;
+    rotors.clear();
+    plugboard.clear();
+    
     INIReader reader(filename);
-    parseError = reader.ParseError();
     
     if (reader.ParseError() < 0)
-        throw invalid_argument("Error on parsing file");
+        return false;
     string temp;
     
     // plugboard
     temp = reader.GetString(PLUGBOARD, RULES, EMPTY);
-    if (temp == EMPTY) {
-        throw invalid_argument("no plugboard found");
-    }
-    
-    
-    
-    for(int i=0; i<temp.length(); i++)
+    if (temp != EMPTY) {
+        for(int i=0; i<temp.length(); i++)
         if(temp[i] == ' ') temp.erase(i,1);
     
-    plugboard.addConnect(temp[0], temp[1]);
-    int commaPos = temp.find(",");
-    while (commaPos != string::npos) {
-        temp = temp.substr(commaPos+1);
-        if (!plugboard.addConnect(temp[0], temp[1])) {
-            throw invalid_argument("error on parsing plugboard rules");
+        plugboard.addConnect(temp[0], temp[1]);
+        int commaPos = temp.find(",");
+        while (commaPos != string::npos) {
+            temp = temp.substr(commaPos+1);
+            if (!plugboard.addConnect(temp[0], temp[1])) {
+                return parsed;
+            }
+            commaPos = temp.find(",");  
         }
-        commaPos = temp.find(",");  
     }
     
     stringstream concat;
-    int rotorLimit = 4;
+    int rotorLimit = REGULAR_ROTORS_NUM;
     // rotors
     int i;
-    for (i = 0; (temp != EMPTY) && (i < rotorLimit); i++) {
+    temp = "";
+    for (i = 0; (temp != EMPTY); i++) {
         concat << ROTOR << i;
         temp = reader.GetString(concat.str(), TYPE, EMPTY);
         if (temp == EMPTY)
@@ -86,33 +92,30 @@ EnigmaReader::EnigmaReader(string filename) {
         if ((type == EnigmaDicts::end) 
             || ((type != rotorTypeReflector) && (i == 0))
                     || ((type != rotorTypeRegular) && (i > 0)))
-            throw invalid_argument("bad rotor type");    
+            return parsed;  
         
         temp = reader.GetString(concat.str(), ID, EMPTY);
         int id = 1;
         if (type == rotorTypeRegular) {
             id = dicts.idMap(dicts.regularIDMap, temp) + 1;
-            // HINT rename equation when changing beta and gamma rotor id
             if ((id == EnigmaDicts::end) 
-                    || ((id >= 9) && (rotorLimit == 4) && (i == 1)) 
-                    || ((id >= 9) && (i != 1))
-                    || ((id < 9) && (rotorLimit == 5) && (i == 1)))
-                throw invalid_argument("bad regular rotor id");
+                    || ((id > Rotor::MAX_INPUT_GAMMA_ID) && (rotorLimit == REGULAR_ROTORS_NUM) && (i == 1)) 
+                    || ((id > Rotor::MAX_INPUT_GAMMA_ID) && (i != 1))
+                    || ((id < Rotor::MAX_INPUT_BETA_ID) && (rotorLimit == THIN_ROTOR_NUM) && (i == 1)))
+                return parsed;
         }
         if (type == rotorTypeReflector) {
             id = dicts.idMap(dicts.reflectorIDMap, temp) + 1;
             if (id == EnigmaDicts::end)
-                throw invalid_argument("bad reflector rotor id");
-                    // HINT rename length of thin reflector name when changing name of thin reflector name
-            if (dicts.reflectorIDMap[id - 1].length() > 1)
-                rotorLimit = 5;
+                return parsed;
+            if (dicts.reflectorIDMap[id - 1].length() == dicts.REFLECTOR_THIN_SIZE)
+                rotorLimit = THIN_ROTOR_NUM;
         }
 
         
         string inputShift = reader.GetString(concat.str(), RING_SHIFT, "1");
         int ringShift = parsePosition(inputShift);
         
-        //int ringShift = reader.GetInteger(concat.str(), RING_SHIFT, 0) % Rotor::DICT_SIZE;
         string inputPosition = reader.GetString(concat.str(), POSITION, "1");
         int position = parsePosition(inputPosition);
         
@@ -120,19 +123,24 @@ EnigmaReader::EnigmaReader(string filename) {
         rotors.push_back(rotor);
         concat.str("");
     }
-    if (i != (rotorLimit)) {
-        throw invalid_argument("incorrect number of rotors");
+    if (i != rotorLimit) {
+        return parsed;
     }
     rotors.front().setType(rotorTypeReflector);
+    parsed = true;
+    return parsed;
 }
+
 
 void EnigmaReader::writeDefaultFile(string filename) {
     fstream file;
     file.open(filename, ios::out);
     if (file.is_open()) {
-        file << "[plugboard]\nrules = AC, BG, TU\n\n";
-        file << "[rotor_0]\ntype = reflector\nid = C_thin\n\n";
-        file << "[rotor_1]\ntype = regular\nid = VII\nposition = 25\n\n";
+        //file << "[plugboard]\nrules = AC, BG, TU\n\n";
+        file << "[rotor_0]\ntype = reflector\nid = B\n\n";
+        file << "[rotor_1]\ntype = regular\nid = III\nposition = A\n\n";
+        file << "[rotor_2]\ntype = regular\nid = II\nposition = A\n\n";
+        file << "[rotor_3]\ntype = regular\nid = I\nposition = A\n\n";
         
         file.close();
     } else {

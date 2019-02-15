@@ -9,11 +9,13 @@
 
 Plugboard::Plugboard() { actual = ORIGINAL; }
 
-//Plugboard::Plugboard(string rules) : Plugboard() {
-//    for (int i = 0; i < rules.length(); i += 2){
-//        addConnect(toupper(rules[i]), toupper(rules[i+1]));
-//    }
-//}
+Plugboard::Plugboard(string rules) : Plugboard() {
+    if ((rules.length() % 2) == 1)
+        throw invalid_argument("incomplete some rules");
+    for (int i = 0; i < rules.length(); i += 2){
+        addConnect(toupper(rules[i]), toupper(rules[i+1]));
+    }
+}
 
 bool Plugboard::haveDuplicates(string word) {
     int counter[Rotor::DICT_SIZE] = {0};
@@ -58,17 +60,21 @@ char Plugboard::translate(char input) {
 }
 
 ostream& operator<<(ostream& os, const Plugboard& plugboard) {
-    for (int i = 0; i < Rotor::DICT_SIZE; i++)
-        if ((plugboard.actual[i] != plugboard.ORIGINAL[i]) && (plugboard.actual[i] > (i + 'A')))
-            os << plugboard.ORIGINAL[i] << " ";
-    os << endl;
-    for(int i = 0; i < Rotor::DICT_SIZE; i++)
-        if ((plugboard.actual[i] != plugboard.ORIGINAL[i]) && (plugboard.actual[i] > (i + 'A')))
-            os << "| ";
-    os << endl;
-    for (int i = 0; i < Rotor::DICT_SIZE; i++)
-        if ((plugboard.actual[i] != plugboard.ORIGINAL[i]) && (plugboard.actual[i] > (i + 'A')))    
-            os << plugboard.actual[i]<< " ";
+    if (plugboard.actual != plugboard.ORIGINAL) {
+        for (int i = 0; i < Rotor::DICT_SIZE; i++)
+            if ((plugboard.actual[i] != plugboard.ORIGINAL[i]) && (plugboard.actual[i] > (i + 'A')))
+                os << plugboard.ORIGINAL[i] << " ";
+        os << endl;
+        for(int i = 0; i < Rotor::DICT_SIZE; i++)
+            if ((plugboard.actual[i] != plugboard.ORIGINAL[i]) && (plugboard.actual[i] > (i + 'A')))
+                os << "| ";
+        os << endl;
+        for (int i = 0; i < Rotor::DICT_SIZE; i++)
+            if ((plugboard.actual[i] != plugboard.ORIGINAL[i]) && (plugboard.actual[i] > (i + 'A')))    
+                os << plugboard.actual[i]<< " ";
+    } else {
+        os << "<default>";
+    }
     return os;
 }
 

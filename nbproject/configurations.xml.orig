@@ -1,0 +1,431 @@
+<<<<<<< Updated upstream
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>INIReader.h</itemPath>
+      <itemPath>enigma.hpp</itemPath>
+      <itemPath>enigma_reader.hpp</itemPath>
+      <itemPath>ini.h</itemPath>
+      <itemPath>plugboard.hpp</itemPath>
+      <itemPath>rotor.hpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>INIReader.cpp</itemPath>
+      <itemPath>enigma.cpp</itemPath>
+      <itemPath>enigma_reader.cpp</itemPath>
+      <itemPath>ini.c</itemPath>
+      <itemPath>main.cpp</itemPath>
+      <itemPath>plugboard.cpp</itemPath>
+      <itemPath>rotor.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f2"
+                     displayName="Enigma tests"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/rotate_tests.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1"
+                     displayName="Rotor tests"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/rotor_tests.cpp</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <linkerTool>
+          <commandLine>-static-libgcc -static-libstdc++</commandLine>
+        </linkerTool>
+      </compileType>
+      <item path="INIReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="INIReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="enigma.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="enigma.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="enigma_reader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="enigma_reader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <folder path="TestFiles">
+        <linkerTool>
+          <commandLine>-static-libgcc -static-libstdc++</commandLine>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
+      <item path="ini.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ini.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="plugboard.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="plugboard.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="rotor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="rotor.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/rotate_tests.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/rotor_tests.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="INIReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="INIReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="enigma.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="enigma.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="enigma_reader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="enigma_reader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
+      <item path="ini.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ini.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="plugboard.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="plugboard.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="rotor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="rotor.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/rotate_tests.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/rotor_tests.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
+=======
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>../config_files/INIReader.h</itemPath>
+      <itemPath>enigma.hpp</itemPath>
+      <itemPath>enigma_reader.hpp</itemPath>
+      <itemPath>../config_files/ini.h</itemPath>
+      <itemPath>plugboard.hpp</itemPath>
+      <itemPath>rotor.hpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Resource Files"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>../config_files/INIReader.cpp</itemPath>
+      <itemPath>enigma.cpp</itemPath>
+      <itemPath>enigma_reader.cpp</itemPath>
+      <itemPath>../config_files/ini.c</itemPath>
+      <itemPath>main.cpp</itemPath>
+      <itemPath>plugboard.cpp</itemPath>
+      <itemPath>rotor.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Test Files"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f2"
+                     displayName="Enigma tests"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/rotate_tests.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1"
+                     displayName="Rotor tests"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/rotor_tests.cpp</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <linkerTool>
+          <commandLine>-static-libgcc -static-libstdc++</commandLine>
+        </linkerTool>
+      </compileType>
+      <item path="../config_files/INIReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../config_files/INIReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../config_files/ini.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../config_files/ini.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="enigma.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="enigma.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="enigma_reader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="enigma_reader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <folder path="TestFiles">
+        <linkerTool>
+          <commandLine>-static-libgcc -static-libstdc++</commandLine>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="plugboard.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="plugboard.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="rotor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="rotor.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/rotate_tests.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/rotor_tests.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+      </compileType>
+      <item path="../config_files/INIReader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="../config_files/INIReader.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../config_files/ini.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../config_files/ini.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="enigma.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="enigma.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="enigma_reader.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="enigma_reader.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
+      <item path="main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="plugboard.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="plugboard.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="rotor.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="rotor.hpp" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/rotate_tests.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/rotor_tests.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
+>>>>>>> Stashed changes
