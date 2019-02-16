@@ -71,8 +71,7 @@ protected:
 public:
     static const  int MAX_INPUT_BETA_ID = 9;
     static const  int MAX_INPUT_GAMMA_ID = 10;
-    static const int MEX_INPUT_REFLECTOR_ID = 4;
-    //static const unsigned int GAMMA_POS = 9;
+    static const int MAX_INPUT_REFLECTOR_ID = 4;
     static const int DICT_SIZE = 26;
     
     Rotor(RotorType type, unsigned int id);

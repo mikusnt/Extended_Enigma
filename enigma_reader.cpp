@@ -61,18 +61,8 @@ bool EnigmaReader::tryParseFile(string filename) {
     // plugboard
     temp = reader.GetString(PLUGBOARD, RULES, EMPTY);
     if (temp != EMPTY) {
-        for(int i=0; i<temp.length(); i++)
-        if(temp[i] == ' ') temp.erase(i,1);
-    
-        plugboard.addConnect(temp[0], temp[1]);
-        int commaPos = temp.find(",");
-        while (commaPos != string::npos) {
-            temp = temp.substr(commaPos+1);
-            if (!plugboard.addConnect(temp[0], temp[1])) {
-                return parsed;
-            }
-            commaPos = temp.find(",");  
-        }
+        if (!plugboard.loadRules(temp))
+            return false;
     }
     
     stringstream concat;

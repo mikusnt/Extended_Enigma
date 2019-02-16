@@ -7,14 +7,28 @@
 #include "plugboard.hpp"
 #include "rotor.hpp"
 
-Plugboard::Plugboard() { actual = ORIGINAL; }
+Plugboard::Plugboard() { actual = ORIGINAL; loadedRules = false; }
 
 Plugboard::Plugboard(string rules) : Plugboard() {
-    if ((rules.length() % 2) == 1)
-        throw invalid_argument("incomplete some rules");
+    loadRules(rules);
+}
+
+bool Plugboard::loadRules(string rules) {
+    for(int i=0; i<rules.length(); i++) {
+        if(rules[i] == ' ') rules.erase(i > 0 ? i-- : i,1);
+        if(rules[i] == ',') rules.erase(i > 0 ? i-- : i,1);
+        if(rules[i] == ';') rules.erase(i > 0 ? i-- : i,1);
+    }
+    if ((rules.length() % 2) == 1) {
+        loadedRules = false;
+        return false;
+    }
+    
     for (int i = 0; i < rules.length(); i += 2){
         addConnect(toupper(rules[i]), toupper(rules[i+1]));
     }
+    loadedRules = true;
+    return true;
 }
 
 bool Plugboard::haveDuplicates(string word) {
@@ -30,33 +44,45 @@ bool Plugboard::haveDuplicates(string word) {
 }
 
 bool Plugboard::addConnect(char input, char output) {
-    input = toupper(input);
-    output = toupper(output);
+    input = toupper(input) >= 'A' ? toupper(input) : input + 'A';
+    output = toupper(output) >= 'A' ? toupper(output) : output + 'A';
+    
     string copy = actual;
     if ((input >= 'A') && (input <= 'Z') && (output >= 'A') && (output <= 'Z')) {
         copy[input - 65] = output;
         copy[output - 65] = input;
         if (!haveDuplicates(copy)) {
             actual = copy;
+            loadedRules = true;
             return true;
-        } else return false;
-    } else return false;
+        } else {
+            loadedRules = false;
+            return false;
+        }
+    } else {
+        loadedRules = false;
+        return false;
+    }
 }
 
 bool Plugboard::removeConnect(char input) {
-    input = toupper(input);
+    input = toupper(input) >= 'A' ? toupper(input) : input + 'A';
     if ((input >= 'A') && (input <= 'Z')) {
         actual[actual[input - 65] - 65] = ORIGINAL[actual[input - 65] - 65];
         actual[input - 65] = ORIGINAL[input - 65];
+        loadedRules = true;
         return true;
-    } else return false;
+    } else {
+        loadedRules = false;
+        return false;
+    }
 }
 
 char Plugboard::translate(char input) {
-    input = toupper(input);
-    if ((input >= 'A') && (input <= 'Z')) {
-        return actual[input];
-    } else return ERROR_CHAR;
+    input = toupper(input) >= 'A' ? toupper(input) : input + 'A';
+    if ((input >= 'A') && (input <= 'Z'))
+        return actual[input - 'A'];
+    else return ERROR_CHAR;
 }
 
 ostream& operator<<(ostream& os, const Plugboard& plugboard) {

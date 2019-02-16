@@ -38,13 +38,25 @@ string Rotor::getPositions(vector<Rotor> rotors) {
 }
 
 Rotor::Rotor(RotorType type, unsigned int id) : position(0), type(type), id(id - 1), ringShift(0) {
-    if ((id < 1) || (id > 10))
-        throw out_of_range("id out of range");
+    if (type == rotorTypeRegular) {
+        if ((id < 1) || (id > Rotor::MAX_INPUT_GAMMA_ID))
+            throw out_of_range("id out of range");
+    }
+    if (type == rotorTypeReflector) {
+        if ((id < 1) || (id > Rotor::MAX_INPUT_REFLECTOR_ID))
+            throw out_of_range("id out of range");
+    }
 }
 
 Rotor::Rotor(RotorType type, unsigned int id, unsigned int ringShift, unsigned int position) : Rotor(type, id) {
-    this->position = toupper(position) >= 'A' ? toupper(position) - 'A' : position - 1;
-    this->ringShift = RotaryPos(toupper(ringShift) >= 'A' ? toupper(ringShift) - 'A' : ringShift - 1);
+    // if rotorTypeReflector, rotor have static position and ringShift
+    if (type == rotorTypeRegular) {
+        this->position = toupper(position) >= 'A' ? toupper(position) - 'A' : position - 1;
+        this->ringShift = RotaryPos(toupper(ringShift) >= 'A' ? toupper(ringShift) - 'A' : ringShift - 1);
+    } else {
+        this->position = 0;
+        this->ringShift = 0;
+    }
 }
 
 Rotor::Rotor(const Rotor& rotor) 
@@ -84,7 +96,7 @@ bool Rotor::canNextRotate(const Rotor& nextRotor) {
 char Rotor::translate(char input, TranslateDirection direction) {
     //if ((params.moveEvery > 0) && (++rotatePosition >= params.moveEvery)) 
     //    shift = (++shift % DICT_SIZE);
-    input = toupper(input);
+    input = toupper(input) >= 'A' ? toupper(input) : input + 'A';
     if (type == rotorTypeRegular) {
         if ((input >= 'A') && (input <= 'Z')) return RotaryASCII(ROTOR_DICT[id][direction][RotaryPos(input - 'A' + position - ringShift)] - position + ringShift);
         else return ERROR_CHAR;

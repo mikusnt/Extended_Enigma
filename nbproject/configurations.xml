@@ -34,7 +34,13 @@
                      displayName="Enigma tests"
                      projectFiles="true"
                      kind="TEST">
-        <itemPath>tests/rotate_tests.cpp</itemPath>
+        <itemPath>tests/enigma_tests.cpp</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3"
+                     displayName="Plugboard tests"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/plugboard_tests.cpp</itemPath>
       </logicalFolder>
       <logicalFolder name="f1"
                      displayName="Rotor tests"
@@ -110,6 +116,21 @@
           <output>${TESTDIR}/TestFiles/f2</output>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+        </linkerTool>
+      </folder>
       <item path="ini.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="ini.h" ex="false" tool="3" flavor2="0">
@@ -124,7 +145,9 @@
       </item>
       <item path="rotor.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/rotate_tests.cpp" ex="false" tool="1" flavor2="0">
+      <item path="tests/enigma_tests.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/plugboard_tests.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/rotor_tests.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -191,6 +214,21 @@
           <output>${TESTDIR}/TestFiles/f2</output>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+        </linkerTool>
+      </folder>
       <item path="ini.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="ini.h" ex="false" tool="3" flavor2="0">
@@ -205,7 +243,9 @@
       </item>
       <item path="rotor.hpp" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/rotate_tests.cpp" ex="false" tool="1" flavor2="0">
+      <item path="tests/enigma_tests.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="tests/plugboard_tests.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="tests/rotor_tests.cpp" ex="false" tool="1" flavor2="0">
       </item>

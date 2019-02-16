@@ -26,13 +26,17 @@ private:
     const string ORIGINAL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     string actual;
     bool haveDuplicates(string word);
+    bool loadedRules;
 public:
     Plugboard();
     Plugboard(string rules);
-    void clear() { actual = ORIGINAL; }
+    bool loadRules(string rules);
+    bool wasLoadedRules() const { return loadedRules; }
+    void clear() { actual = ORIGINAL; loadedRules = false; }
     bool addConnect(char input, char output);
     bool removeConnect(char input);
     char translate(char input);
+    
     
     friend ostream& operator<<(ostream& os, const Plugboard& plugboard);
 };

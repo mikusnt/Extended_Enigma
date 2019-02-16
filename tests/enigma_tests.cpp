@@ -124,17 +124,17 @@ void testRotateDS_UDO() {
 }
 
 int main(int argc, char** argv) {
-    std::cout << "%SUITE_STARTED% testRotate" << std::endl;
+    std::cout << "%SUITE_STARTED% Enigma tests" << std::endl;
 
-    std::cout << "%TEST_STARTED% testRotateDS_KDO (enigma_tests)" << std::endl;
+    std::cout << "%TEST_STARTED% testRotateDS_KDO (rotate_tests)" << std::endl;
     testRotateDS_KDO();
-    std::cout << "%TEST_FINISHED% testRotateDS_KDO (enigma_tests)" << std::endl;
+    std::cout << "%TEST_FINISHED% testRotateDS_KDO (rotate_tests)" << std::endl;
     
-    std::cout << "%TEST_STARTED% testRotateDS_UDO (enigma_tests)" << std::endl;
+    std::cout << "%TEST_STARTED% testRotateDS_UDO (rotate_tests)" << std::endl;
     testRotateDS_UDO();
-    std::cout << "%TEST_FINISHED% testRotateDS_UDO (enigma_tests)" << std::endl;
+    std::cout << "%TEST_FINISHED% testRotateDS_UDO (rotate_tests)" << std::endl;
 
-    std::cout << "%SUITE_FINISHED% testRotate" << std::endl;
+    std::cout << "%SUITE_FINISHED% Enigma tests" << std::endl;
 
     return (EXIT_SUCCESS);
 }
