@@ -30,13 +30,15 @@ private:
 public:
     Plugboard();
     Plugboard(string rules);
+    Plugboard(const Plugboard& plugboard);
+    
     bool loadRules(string rules);
     bool wasLoadedRules() const { return loadedRules; }
-    void clear() { actual = ORIGINAL; loadedRules = false; }
+    void clear() { actual = ORIGINAL; loadedRules = true; }
+    
     bool addConnect(char input, char output);
     bool removeConnect(char input);
     char translate(char input);
-    
     
     friend ostream& operator<<(ostream& os, const Plugboard& plugboard);
 };

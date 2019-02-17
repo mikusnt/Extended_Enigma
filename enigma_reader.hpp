@@ -25,14 +25,17 @@
 using namespace std;
 
 class EnigmaDicts {
+private:
+    const string EMPTY = "empty";
 public:
-    const string regularIDMap[10] = { "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "beta", "gamma" };
-    const string reflectorIDMap[4] = { "B", "C", "B_thin", "C_thin" };
+    const string regularIDMap[11] = { EMPTY, "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "beta", "gamma" };
+    const string reflectorIDMap[5] = { EMPTY, "B", "C", "B_thin", "C_thin" };
     const string rotorTypeMap[2] = { "regular", "reflector" };
     static const int end = -1;
     static const int REFLECTOR_THIN_SIZE = 6;
+    static const int REFLECTOR_SIZE = 1;
     
-    unsigned int idMap(const string map[], string value);
+    int idMap(const string map[], string value);
 };
 
 class EnigmaReader {
@@ -48,8 +51,6 @@ private:
     const string POSITION = "position";
     
     const string EMPTY = "_empty";
-    const int REGULAR_ROTORS_NUM = 4;
-    const int THIN_ROTOR_NUM = 5;
    
     string filename;
     Plugboard plugboard;
@@ -57,7 +58,7 @@ private:
     bool parsed;
     
     bool haveDuplicates();
-    unsigned int parsePosition(string pos);
+    int parsePosition(string pos);
 public:
     EnigmaReader() {}
     EnigmaReader(string filename);
@@ -65,8 +66,12 @@ public:
     bool tryParseFile(string filename);
     static void writeDefaultFile(string filename);
     
-    Plugboard getPlugboard();
-    vector<Rotor> getRotors();
+    
+    Plugboard getPlugboard() const { return plugboard; }
+    vector<Rotor> getRotors() const { return rotors; }
+    string getFilename() const { return filename; }
+    
+    friend ostream& operator<<(ostream& os, const EnigmaReader& reader);
 };
 
 

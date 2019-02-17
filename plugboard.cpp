@@ -7,11 +7,13 @@
 #include "plugboard.hpp"
 #include "rotor.hpp"
 
-Plugboard::Plugboard() { actual = ORIGINAL; loadedRules = false; }
+Plugboard::Plugboard() { actual = ORIGINAL; loadedRules = true; }
 
 Plugboard::Plugboard(string rules) : Plugboard() {
     loadRules(rules);
 }
+
+Plugboard::Plugboard(const Plugboard& plugboard) : actual(plugboard.actual), loadedRules(plugboard.loadedRules) {}
 
 bool Plugboard::loadRules(string rules) {
     for(int i=0; i<rules.length(); i++) {

@@ -70,19 +70,19 @@ void testTranslateRotate() {
     Rotor rotor(rotorTypeRegular, 1, 'A', 'Y');
     rotor.autoRotate();
     int position = rotor.getPosition();
-    if (position != 25) {
+    if (position != 26) {
         std::cout << "%TEST_FAILED% -------------------- regular I AY directionLeft with rotor position=" << position << std::endl;
     } 
     
     rotor.autoRotate();
     position = rotor.getPosition();
-    if (position != 0) {
+    if (position != 1) {
         std::cout << "%TEST_FAILED% -------------------- regular I AZ with rotor position=" << position << std::endl;
     } 
     
     rotor.autoRotate();
     position = rotor.getPosition();
-    if (position != 1) {
+    if (position != 2) {
         std::cout << "%TEST_FAILED% -------------------- regular I AA with rotor position=" << position << std::endl;
     } 
 }

@@ -33,20 +33,21 @@ int main(int argc, char** argv) {
         reader.tryParseFile("default.ini");
     }
     
-    if (reader.wasParsed()) {
-        Plugboard plugboard = reader.getPlugboard();
-        vector<Rotor> rotors = reader.getRotors();
-
-        cout << "Translation on plugboard:\n";
-        cout << plugboard << "\n\n";
-
-        cout << "Rotors settings: \n";
-        for(int i = 0; i < rotors.size(); i++) {
-            cout << rotors[i] << endl;
-        }
-    } else {
+    if (!reader.wasParsed()) {
         cout << "Error on parsing " << FILENAME << " and later " << DEFAULT_FILENAME << endl;
+        return EXIT_FAILURE;
+    } 
+    //cout << "Data parsed from " << reader.getFilename() << endl;
+    //cout << reader << endl;
+    Enigma enigma(reader.getPlugboard(), reader.getRotors());
+    if (!enigma.wasInitialized()) {
+        cout << "Error on validating arguments on initializing enigma\n";
+        return EXIT_FAILURE;
     }
+        
+    cout << enigma << endl;
+    
+        
     return 0;
 }
 
