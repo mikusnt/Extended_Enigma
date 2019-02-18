@@ -23,16 +23,20 @@ private:
     Plugboard plugboard;
     vector<Rotor> rotors;
     bool initialized;
-    bool correctRotors(vector<Rotor>& rotors);
+    bool areCorrectRotors(vector<Rotor>& rotors);
+    char normalizeChar(char input);
 public:
     static const int REGULAR_ROTORS_NUM = 4;
     static const int THIN_ROTOR_NUM = 5;
+    static string groupString(string input, int groupSize);
     
     Enigma(Plugboard plugboard, vector<Rotor> rotors);
     bool wasInitialized() const { return initialized; }
     string getStringRotorsPosition() const;
     string getStringRotorsInfo() const;
     char translate(char input);
+    bool rotate(int rotorNumber, int newPosition);
+    bool rotateBy(int rotorNumber, int move); 
     
     friend ostream& operator<<(ostream& os, const Enigma& enigma);
 };

@@ -6,6 +6,7 @@
 
 #include "plugboard.hpp"
 #include "rotor.hpp"
+#include "enigma_reader.hpp"
 
 Plugboard::Plugboard() { actual = ORIGINAL; loadedRules = true; }
 
@@ -84,7 +85,7 @@ char Plugboard::translate(char input) {
     input = toupper(input) >= 'A' ? toupper(input) : input + 'A';
     if ((input >= 'A') && (input <= 'Z'))
         return actual[input - 'A'];
-    else return ERROR_CHAR;
+    else return EnigmaDicts::ERROR_CHAR;
 }
 
 ostream& operator<<(ostream& os, const Plugboard& plugboard) {

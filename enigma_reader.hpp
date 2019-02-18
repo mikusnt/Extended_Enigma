@@ -34,6 +34,7 @@ public:
     static const int end = -1;
     static const int REFLECTOR_THIN_SIZE = 6;
     static const int REFLECTOR_SIZE = 1;
+    static const char ERROR_CHAR = 'X';
     
     int idMap(const string map[], string value);
 };

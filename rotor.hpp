@@ -76,13 +76,12 @@ private:
     };
     
     const string ROTOR_CHANGE_POS[8] = {"Q", "E", "V", "J", "Z", "ZM", "ZM", "ZM"};
-    const char ERROR_CHAR = 'X';
 
     RotorType type;
     unsigned int id;
-    unsigned int ringShift;
-    unsigned int position;
-    unsigned short rotaryPos(short position);
+    int ringShift;
+    int position;
+    int rotaryPos(int position);
     char rotaryASCII(char sign);
     int normalizePosition(int value);
     int denormalizePosition(int value) const;
@@ -98,7 +97,8 @@ public:
     bool wasInitialized() const { return initialized; }
     
     int getPosition() const { return denormalizePosition(position); }
-    void rotate(unsigned short newPosition);
+    void rotate(int newPosition);
+    void rotateBy(int move);
     bool canNextRotate(const Rotor& nextRotor);
     string getStringPosition() const { return getStringFromAddr(position); }
     

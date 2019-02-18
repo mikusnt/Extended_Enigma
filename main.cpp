@@ -47,6 +47,23 @@ int main(int argc, char** argv) {
         
     cout << enigma << endl;
     
+    char sign = 0;
+    while (sign != 27) {
+        sign = getch();
+        if (sign == 27)
+            continue;
+        if ((sign >= '2') && (sign <= '5')) 
+            enigma.rotateBy(sign - '2' + 2, 1);
+        else if ((sign >= '6') && (sign <= '9')) 
+            enigma.rotateBy(sign - '6' + 2, -1);
+        else {
+            cout << "----------------------- " << sign << " -> " << enigma.translate(sign) << endl; 
+        }
+                  
+        cout << "New positions of rotors: " << endl;
+        cout << enigma.getStringRotorsPosition() << endl;
+    }
+    
         
     return 0;
 }

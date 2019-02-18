@@ -123,6 +123,58 @@ void testRotateDS_UDO() {
     }
 }
 
+void testTranslateWehrmacht() {
+    EnigmaReader reader("config/wechrmacht.ini");
+    if (!reader.wasParsed()) {
+       std::cout << "%TEST_FAILED% -------------------- error on parsing file"  << std::endl; 
+       return;
+    }
+    Enigma enigma(reader.getPlugboard(), reader.getRotors());
+    if (!enigma.wasInitialized()){
+        std::cout << "%TEST_FAILED% -------------------- error on initializing enigma"  << std::endl; 
+       return;  
+    }
+    
+    string input = "QBLTWLDAHHYEOEFPTWYBLENDPMKOXLDFAMUDWIJDXRJZ";
+    string outputP = "DERFUEHRERISTTODXDERKAMPFGEHTWEITERXDOENITZX";
+    stringstream output;
+    for (int i = 0; i < input.size(); i++) {
+        output << enigma.translate(input[i]);
+    }
+    string outputS = output.str();
+    for (int i = 0; i < input.size(); i++) {
+        if (outputP[i] != outputS[i]) 
+            std::cout << "%TEST_FAILED% -------------------- translation from " << input[i] << " to " << outputP[i] << " with result=" 
+                    << outputS[i] << " at position " << enigma.getStringRotorsPosition() << std::endl;   
+    }
+    //cout << Enigma::groupString(input, 5) << endl; 
+    //cout << Enigma::groupString(output.str(), 5) << endl;    
+    
+}
+
+void testTranslateAShift() {
+    EnigmaReader reader("config/ashift.ini");
+    if (!reader.wasParsed()) {
+       std::cout << "%TEST_FAILED% -------------------- error on parsing file"  << std::endl; 
+       return;
+    }
+    Enigma enigma(reader.getPlugboard(), reader.getRotors());
+    if (!enigma.wasInitialized()){
+        std::cout << "%TEST_FAILED% -------------------- error on initializing enigma"  << std::endl; 
+       return;  
+    }
+    stringstream output;
+    string outputP = "DZGOWCXLTKSBTMCDLPBMFQOFXYHCXT";
+    for (int i = 0; i < outputP.size(); i++) {
+        //cout << enigma.getStringRotorsPosition() << endl;
+        char temp = enigma.translate('A');
+        output << temp;
+        if (outputP[i] != temp) 
+            std::cout << "%TEST_FAILED% -------------------- translation from 'A' to " << outputP[i] << " with result=" 
+                    << temp << " at position " << enigma.getStringRotorsPosition() << std::endl;  
+    }  
+}
+
 int main(int argc, char** argv) {
     std::cout << "%SUITE_STARTED% Enigma tests" << std::endl;
 
@@ -133,6 +185,14 @@ int main(int argc, char** argv) {
     std::cout << "%TEST_STARTED% testRotateDS_UDO (rotate_tests)" << std::endl;
     testRotateDS_UDO();
     std::cout << "%TEST_FINISHED% testRotateDS_UDO (rotate_tests)" << std::endl;
+    
+    std::cout << "%TEST_STARTED% testTranslateWehrmacht (rotate_tests)" << std::endl;
+    testTranslateWehrmacht();
+    std::cout << "%TEST_FINISHED% testTranslateWehrmacht (rotate_tests)" << std::endl;
+    
+    std::cout << "%TEST_STARTED% testTranslateAShift (rotate_tests)" << std::endl;
+    testTranslateAShift();
+    std::cout << "%TEST_FINISHED% testTranslateAShift (rotate_tests)" << std::endl;
 
     std::cout << "%SUITE_FINISHED% Enigma tests" << std::endl;
 

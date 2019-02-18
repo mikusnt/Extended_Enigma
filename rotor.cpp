@@ -9,14 +9,13 @@
 #include "rotor.hpp"
 #include "enigma_reader.hpp"
 
- unsigned short Rotor::rotaryPos(short position) {
-    while (position >= (short)DICT_SIZE) position -= DICT_SIZE;
+ int Rotor::rotaryPos(int position) {
+    while (position >= DICT_SIZE) position -= DICT_SIZE;
     while (position < 0) position += DICT_SIZE;
     return position;
 }
 
 char Rotor::rotaryASCII(char sign) {
-    sign = toupper(sign);
     while (sign < 'A') sign += DICT_SIZE;
     while (sign > 'Z') sign -= DICT_SIZE;
     return sign;
@@ -93,9 +92,15 @@ void Rotor::autoRotate() {
         position = rotaryPos(++position);
 }
 
-void Rotor::rotate(unsigned short newPosition) {
+void Rotor::rotate(int newPosition) {
     if (type == rotorTypeRegular)
         this->position = normalizePosition(newPosition - 1);
+}
+
+void Rotor::rotateBy(int move) {
+    if (type == rotorTypeRegular) {
+        this->position = normalizePosition(this->position + move + 1);
+    }
 }
 
 bool Rotor::canNextRotate(const Rotor& nextRotor) {
@@ -116,12 +121,15 @@ char Rotor::translate(char input, TranslateDirection direction) {
     //if ((params.moveEvery > 0) && (++rotatePosition >= params.moveEvery)) 
     //    shift = (++shift % DICT_SIZE);
     input = toupper(input) >= 'A' ? toupper(input) : input + 'A';
+    //int newInput = input;
     if (type == rotorTypeRegular) {
-        if ((input >= 'A') && (input <= 'Z')) return rotaryASCII(ROTOR_DICT[id][direction][rotaryPos(input - 'A' + position - ringShift)] - position + ringShift);
-        else return ERROR_CHAR;
+        int pos = input - 'A' + position - ringShift;
+        int translated = ROTOR_DICT[id][direction][rotaryPos(pos)];
+        if ((input >= 'A') && (input <= 'Z')) return rotaryASCII(translated - position + ringShift);
+        else return EnigmaDicts::ERROR_CHAR;
     } else if (type == rotorTypeReflector) {
-        if ((input >= 'A') && (input <= 'Z')) return rotaryASCII(REFLECTOR_DICT[id][rotaryPos(input - 'A' + position - ringShift)] - position + ringShift);
-        else return ERROR_CHAR;
+        if ((input >= 'A') && (input <= 'Z')) return rotaryASCII(REFLECTOR_DICT[id][rotaryPos(input - 'A')]);
+        else return EnigmaDicts::ERROR_CHAR;
     }
     /*
     else  if ((input >= 'A') && (input <= 'Z')) return rotorDict[this->params.id][direction][(input - 54 + shift) % DICT_SIZE];

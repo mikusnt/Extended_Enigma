@@ -7,7 +7,7 @@
 #include "enigma.hpp"
 #include "enigma_reader.hpp"
 
-bool Enigma::correctRotors(vector<Rotor>& rotors) {
+bool Enigma::areCorrectRotors(vector<Rotor>& rotors) {
     int i;
     EnigmaDicts dicts;
     int rotorLimit = REGULAR_ROTORS_NUM;
@@ -37,12 +37,33 @@ bool Enigma::correctRotors(vector<Rotor>& rotors) {
     return true;
 }
 
+char Enigma::normalizeChar(char input) {
+    input = toupper(input);
+    if ((input < 'A') || (input > 'Z')) 
+        return EnigmaDicts::ERROR_CHAR;
+    else return input;
+}
+
+string Enigma::groupString(string input, int groupSize) {
+    if ((groupSize > 0) && (groupSize < input.size())) {
+        stringstream concat;
+        for (int i = 0; i < input.size(); i++) {
+            if ((i > 0) && ((i % groupSize) == 0) && (i != (input.size() - 1)))
+                    concat << " ";
+            concat << input[i];
+        }
+        return concat.str();
+    } else return input;
+}
+
+
+
 Enigma::Enigma(Plugboard plugboard, vector<Rotor> rotors) : plugboard(plugboard), rotors(rotors) {
     initialized = false;
     //this->plugboard = plugboard;
     if (!this->plugboard.wasLoadedRules())
         return;
-    if(!correctRotors(rotors))
+    if(!areCorrectRotors(rotors))
         return;
     //this->rotors = rotors;
     initialized = true;
@@ -67,6 +88,7 @@ string Enigma::getStringRotorsInfo() const {
 }
 
 char Enigma::translate(char input) {
+    input = normalizeChar(input);
     char translated = plugboard.translate(input);
     
     // try to rotate
@@ -92,10 +114,27 @@ char Enigma::translate(char input) {
     
     // translate from left to right without reflector
     for (vector<Rotor>::iterator i = rotors.begin() + 1; i < rotors.end(); i++) {
-        translated = (*i).translate(translated, directionLeft);
+        translated = (*i).translate(translated, directionRight);
     }
-    return translated;
+    return plugboard.translate(translated);
 }
+
+bool Enigma::rotate(int rotorNumber, int newPosition) {
+    if ((rotorNumber < 2) || (rotorNumber > rotors.size())) {
+        return false;
+    }
+    rotors[rotorNumber - 1].rotate(newPosition);
+    return true;
+}
+
+bool Enigma::rotateBy(int rotorNumber, int move) {
+    if ((rotorNumber < 2) || (rotorNumber > rotors.size())) {
+        return false;
+    }
+    rotors[rotorNumber - 1].rotateBy(move);
+    return true;    
+}
+
 
 ostream& operator<<(ostream& os, const Enigma& enigma) {
     os << "Translation on plugboard:\n";
