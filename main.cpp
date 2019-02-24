@@ -18,11 +18,13 @@
 #include <fstream>
 #include "enigma.hpp"
 #include "enigma_reader.hpp"
+#include "obj_rotor.hpp"
 
 
 using namespace std;
 
 int main(int argc, char** argv) {
+    vector<oRotor> rotors;
     const string FILENAME = "enigma.ini";
     const string DEFAULT_FILENAME = "default.ini";
     EnigmaReader reader;

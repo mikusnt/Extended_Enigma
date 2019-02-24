@@ -23,7 +23,7 @@
 
 void testRotateDS_KDO() {
     try {
-        EnigmaReader reader("testRotateDS_KDO.ini");
+        EnigmaReader reader("tests/config/testRotateDS_KDO.ini");
         Plugboard plugboard = reader.getPlugboard();
         vector<Rotor> rotors = reader.getRotors();
         Enigma enigma(plugboard, rotors);
@@ -74,7 +74,7 @@ void testRotateDS_KDO() {
 
 void testRotateDS_UDO() {
     try {
-        EnigmaReader reader("testRotateDS_UDO.ini");
+        EnigmaReader reader("tests/config/testRotateDS_UDO.ini");
         Plugboard plugboard = reader.getPlugboard();
         vector<Rotor> rotors = reader.getRotors();
         Enigma enigma(plugboard, rotors);

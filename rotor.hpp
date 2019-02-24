@@ -52,7 +52,7 @@ typedef enum {
     ReflectorID_C,
     ReflectorID_Bthin,
     ReflectorID_Cthin
-} RotorReflectorId;
+} ReflectorRotorId;
 
 class Rotor {
 private:

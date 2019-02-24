@@ -17,6 +17,7 @@ Plugboard::Plugboard(string rules) : Plugboard() {
 Plugboard::Plugboard(const Plugboard& plugboard) : actual(plugboard.actual), loadedRules(plugboard.loadedRules) {}
 
 bool Plugboard::loadRules(string rules) {
+    string tempDict = actual; 
     for(int i=0; i<rules.length(); i++) {
         if(rules[i] == ' ') rules.erase(i > 0 ? i-- : i,1);
         if(rules[i] == ',') rules.erase(i > 0 ? i-- : i,1);
@@ -26,10 +27,15 @@ bool Plugboard::loadRules(string rules) {
         loadedRules = false;
         return false;
     }
-    
+    bool result;
     for (int i = 0; i < rules.length(); i += 2){
-        addConnect(toupper(rules[i]), toupper(rules[i+1]));
+        result = addConnect(tempDict, toupper(rules[i]), toupper(rules[i+1]));
+        if (result == false) {
+            loadedRules = false;
+            return false;
+        }
     }
+    actual = tempDict;
     loadedRules = true;
     return true;
 }
@@ -47,15 +53,19 @@ bool Plugboard::haveDuplicates(string word) {
 }
 
 bool Plugboard::addConnect(char input, char output) {
+    return addConnect(actual, input, output);
+}
+
+bool Plugboard::addConnect(string& dict, char input, char output) {
     input = toupper(input) >= 'A' ? toupper(input) : input + 'A';
     output = toupper(output) >= 'A' ? toupper(output) : output + 'A';
     
-    string copy = actual;
+    string copy = dict;
     if ((input >= 'A') && (input <= 'Z') && (output >= 'A') && (output <= 'Z')) {
         copy[input - 65] = output;
         copy[output - 65] = input;
         if (!haveDuplicates(copy)) {
-            actual = copy;
+            dict = copy;
             loadedRules = true;
             return true;
         } else {

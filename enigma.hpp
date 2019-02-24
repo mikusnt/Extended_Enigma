@@ -16,7 +16,7 @@
 
 #include "plugboard.hpp"
 #include "rotor.hpp"
-#include "sstream"
+#include <sstream>
 
 class Enigma {
 private:

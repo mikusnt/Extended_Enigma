@@ -52,6 +52,32 @@ void removeConnect() {
         std::cout << "%TEST_FAILED% -------------------- translate T on 'PO ML IU KJ NH YT GB VF RE DC' after del 'YT' with result=" << result << std::endl;
 }
 
+void validateArgument() {
+    Plugboard plugboard("PO; ML; IU; KJ; NH; YT; GB; VF; RE; DC");
+    if (!plugboard.wasLoadedRules()) {
+        std::cout << "%TEST_FAILED% -------------------- rules 'PO; ML; IU; KJ; NH; YT; GB; VF; RE; DC' with error on load" << std::endl;
+    }
+    plugboard.clear();
+    plugboard.loadRules("POMLIUKJNHYTGBVFREDC");
+    if (!plugboard.wasLoadedRules()) {
+        std::cout << "%TEST_FAILED% -------------------- rules 'POMLIUKJNHYTGBVFREDC' with error on load" << std::endl;
+    }
+    
+    plugboard.clear();
+    plugboard.loadRules("PO ML IU KJ NH YT G VF RE DC");
+    if (plugboard.wasLoadedRules()) {
+        std::cout << "%TEST_FAILED% -------------------- rules 'PO ML IU KJ NH YT G VF RE DC' without error on load" << std::endl;
+    }
+}
+
+void originalOnError() {
+    Plugboard plugboard("AB");
+    plugboard.loadRules("ASDA");
+    if (plugboard.getDict() != "BACDEFGHIJKLMNOPQRSTUVWXYZ") {
+        std::cout << "%TEST_FAILED% -------------------- with error loaded only part of rules" << std::endl;
+    }
+}
+
 int main(int argc, char** argv) {
     std::cout << "%SUITE_STARTED% plugboard_tests" << std::endl;
 
@@ -62,6 +88,14 @@ int main(int argc, char** argv) {
     std::cout << "%TEST_STARTED% removeConnect (plugboard_tests)" << std::endl;
     removeConnect();
     std::cout << "%TEST_FINISHED% removeConnect (plugboard_tests)" << std::endl;
+    
+    std::cout << "%TEST_STARTED% validateArgument (plugboard_tests)" << std::endl;
+    validateArgument();
+    std::cout << "%TEST_FINISHED% validateArgument (plugboard_tests)" << std::endl;
+    
+    std::cout << "%TEST_STARTED% originalOnError (plugboard_tests)" << std::endl;
+    originalOnError();
+    std::cout << "%TEST_FINISHED% originalOnError (plugboard_tests)" << std::endl;
 
     std::cout << "%SUITE_FINISHED% plugboard_tests" << std::endl;
 

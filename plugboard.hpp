@@ -24,8 +24,9 @@ class Plugboard {
 private:
     const string ORIGINAL = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     string actual;
-    bool haveDuplicates(string word);
     bool loadedRules;
+    bool haveDuplicates(string word);
+    bool addConnect(string& dict, char input, char output);
 public:
     Plugboard();
     Plugboard(string rules);
@@ -38,6 +39,7 @@ public:
     bool addConnect(char input, char output);
     bool removeConnect(char input);
     char translate(char input);
+    string getDict() const { return actual; }
     
     friend ostream& operator<<(ostream& os, const Plugboard& plugboard);
 };
