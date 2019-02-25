@@ -23,7 +23,7 @@ namespace enigma {
         for (i = 0; i < rotorLimit; i++) {
             RegularRotorId id = rotors[i].getId();
             if (((id == RegularID_BETA) || (id == RegularID_GAMMA))
-                    && (i != 3) || (rotorLimit != THIN_ROTOR_NUM))
+                    && ((i != 3) || (rotorLimit != THIN_ROTOR_NUM)))
                 return false;
             if (!rotors[i].wasInitialized())
                 return false;
@@ -66,10 +66,10 @@ namespace enigma {
     std::string Enigma::getStringRotorsPosition() const {
         std::stringstream positions;
         //positions << reflector.getStringPosition();
-        for (int i = 0; i < rotors.size() - 1; i++) {
+        for (int i = rotors.size() - 1; i > 0 ; i--) {
             positions << rotors[i].getStringPosition() << " ";
         }
-        positions << rotors.back().getStringPosition();
+        positions << rotors.front().getStringPosition();
         return positions.str();
     }
 
@@ -88,14 +88,16 @@ namespace enigma {
         char translated = plugboard.translate(input);
 
         // try to rotate
-        bool canNextRotate = rotors.back().canNextRotate(*(rotors.end() - 2));
-        rotors.back().autoRotate();
-        for (std::vector<RegularRotor>::iterator i = rotors.end() - 2; i >= rotors.begin(); i--) {
+        //bool canNextRotate = rotors.back().canNextRotate(*(rotors.end() - 2));
+        bool canNextRotate = rotors.front().canNextRotate(*(rotors.begin()+1));
+        rotors.front().autoRotate();
+        for (std::vector<RegularRotor>::iterator i = rotors.begin() + 1; i < rotors.end(); i++) {
             if (canNextRotate) {
-                canNextRotate = (*i).canNextRotate((*(i-1)));
+                if (i < rotors.end() - 1)
+                    canNextRotate = (*i).canNextRotate((*(i+1)));
                 (*i).autoRotate();
             } else {
-                if ((*i).canNextRotate((*(i-1)))) {
+                if ((i < rotors.end() - 1) && ((*i).canNextRotate(*(i+1)))) {
                     canNextRotate = true;
                     (*i).autoRotate();
                 }
@@ -103,13 +105,13 @@ namespace enigma {
 
         }
 
-        // translate from right to left, first element is a reflector
-        for (std::vector<RegularRotor>::iterator i = rotors.end() - 1; i >= rotors.begin(); i--) {
+        // translate from right to left
+        for (std::vector<RegularRotor>::iterator i = rotors.begin(); i < rotors.end(); i++) {
             translated = (*i).translate(translated, directionLeft);
         }
         translated = reflector.translate(translated);
         // translate from left to right without reflector
-        for (std::vector<RegularRotor>::iterator i = rotors.begin(); i < rotors.end(); i++) {
+        for (std::vector<RegularRotor>::iterator i = rotors.end() - 1; i >= rotors.begin(); i--) {
             translated = (*i).translate(translated, directionRight);
         }
         return plugboard.translate(translated);
