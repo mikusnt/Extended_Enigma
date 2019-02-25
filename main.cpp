@@ -18,13 +18,14 @@
 #include <fstream>
 #include "enigma.hpp"
 #include "enigma_reader.hpp"
-#include "obj_rotor.hpp"
+#include "rotor.hpp"
 
 
 using namespace std;
+using namespace enigma;
 
 int main(int argc, char** argv) {
-    vector<oRotor> rotors;
+     vector<enigma::Rotor> rotors;
     const string FILENAME = "enigma.ini";
     const string DEFAULT_FILENAME = "default.ini";
     EnigmaReader reader;
@@ -39,34 +40,32 @@ int main(int argc, char** argv) {
         cout << "Error on parsing " << FILENAME << " and later " << DEFAULT_FILENAME << endl;
         return EXIT_FAILURE;
     } 
-    //cout << "Data parsed from " << reader.getFilename() << endl;
+    cout << "Data parsed from " << reader.getFilename() << endl;
     //cout << reader << endl;
-    Enigma enigma(reader.getPlugboard(), reader.getRotors());
+    Enigma enigma(reader.getPlugboard(), reader.getRotors(), reader.getReflector());
     if (!enigma.wasInitialized()) {
         cout << "Error on validating arguments on initializing enigma\n";
         return EXIT_FAILURE;
     }
         
     cout << enigma << endl;
-    
-    char sign = 0;
-    while (sign != 27) {
-        sign = getch();
-        if (sign == 27)
-            continue;
-        if ((sign >= '2') && (sign <= '5')) 
-            enigma.rotateBy(sign - '2' + 2, 1);
-        else if ((sign >= '6') && (sign <= '9')) 
-            enigma.rotateBy(sign - '6' + 2, -1);
-        else {
-            cout << "----------------------- " << sign << " -> " << enigma.translate(sign) << endl; 
-        }
-                  
-        cout << "New positions of rotors: " << endl;
-        cout << enigma.getStringRotorsPosition() << endl;
-    }
-    
-        
+//    
+//    char sign = 0;
+//    while (sign != 27) {
+//        sign = getch();
+//        if (sign == 27)
+//            continue;
+//        if ((sign >= '2') && (sign <= '5')) 
+//            enigma.rotateBy(sign - '2' + 2, 1);
+//        else if ((sign >= '6') && (sign <= '9')) 
+//            enigma.rotateBy(sign - '6' + 2, -1);
+//        else {
+//            cout << "----------------------- " << sign << " -> " << enigma.translate(sign) << endl; 
+//        }
+//                  
+//        cout << "New positions of rotors: " << endl;
+//        cout << enigma.getStringRotorsPosition() << endl;
+//    }   
     return 0;
 }
 

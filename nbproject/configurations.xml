@@ -8,7 +8,6 @@
       <itemPath>enigma.hpp</itemPath>
       <itemPath>enigma_reader.hpp</itemPath>
       <itemPath>ini.h</itemPath>
-      <itemPath>obj_rotor.hpp</itemPath>
       <itemPath>plugboard.hpp</itemPath>
       <itemPath>rotor.hpp</itemPath>
     </logicalFolder>
@@ -24,7 +23,6 @@
       <itemPath>enigma_reader.cpp</itemPath>
       <itemPath>ini.c</itemPath>
       <itemPath>main.cpp</itemPath>
-      <itemPath>obj_rotor.cpp</itemPath>
       <itemPath>plugboard.cpp</itemPath>
       <itemPath>rotor.cpp</itemPath>
     </logicalFolder>
@@ -139,10 +137,6 @@
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
-      <item path="obj_rotor.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="obj_rotor.hpp" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="plugboard.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="plugboard.hpp" ex="false" tool="3" flavor2="0">
@@ -240,10 +234,6 @@
       <item path="ini.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="obj_rotor.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="obj_rotor.hpp" ex="false" tool="3" flavor2="0">
       </item>
       <item path="plugboard.cpp" ex="false" tool="1" flavor2="0">
       </item>

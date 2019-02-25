@@ -14,20 +14,21 @@
 #include <stdlib.h>
 #include <iostream>
 #include "rotor.hpp"
+#include "rotor.hpp"
 
 /*
  * Simple C++ Test Suite
  */
 
 void testTranslateIAALR() {
-    Rotor *rotor = new Rotor(rotorTypeRegular, 1, 'A', 'A');
+    enigma::Rotor *rotor = new enigma::RegularRotor(enigma::RegularID_I, 'A', 'A');
     char result;
-    result = rotor->translate('a', directionLeft);
+    result = rotor->translate('a');
     if (result != 'E') {
         std::cout << "%TEST_FAILED% -------------------- regular I AA directionLeft with result=" << result << std::endl;
     }
     rotor->autoRotate();
-    result = rotor->translate('a', directionLeft);
+    result = rotor->translate('a');
     if (result != 'J') {
        std::cout << "%TEST_FAILED% -------------------- regular I AB directionLeft with result=" << result << std::endl;
     }
@@ -35,12 +36,12 @@ void testTranslateIAALR() {
     //delete rotor;
     //rotor = new Rotor(rotorTypeRegular, 1, 'A', 'A');
     rotor->autoRotate();
-    result = rotor->translate('A', directionRight);
+    result = rotor->translate('A', enigma::directionRight);
     if (result != 'W') {
         std::cout << "%TEST_FAILED% -------------------- regular I AC directionRight with result=" << result << std::endl;
     }
     rotor->autoRotate();
-    result = rotor->translate('A', directionRight);
+    result = rotor->translate('A', enigma::directionRight);
     if (result != 'D') {
        std::cout << "%TEST_FAILED% -------------------- regular I AD directionRight with result=" << result << std::endl;
     }
@@ -48,26 +49,24 @@ void testTranslateIAALR() {
 }
 
 void testTranslateIBA() {
-    TranslateDirection direction = directionLeft;
-    Rotor rotor(rotorTypeRegular, 1, 'B', 'A');
-    char result = rotor.translate('a', direction);
+    //Rotor rotor(rotorTypeRegular, 1, 'B', 'A');
+    enigma::RegularRotor rotor(enigma::RegularID_I, 'B', 'A');
+    char result = rotor.translate('a');
     if (result != 'K') {
         std::cout << "%TEST_FAILED% -------------------- regular I BA directionLeft with result=" << result << std::endl;
     } 
 }
 
 void testTranslateIFY() {
-    TranslateDirection direction = directionLeft;
-    Rotor rotor(rotorTypeRegular, 1, 'F', 'Y');
-    char result = rotor.translate('a', direction);
+    enigma::RegularRotor rotor(enigma::RegularID_I, 'F', 'Y');
+    char result = rotor.translate('a');
     if (result != 'W') {
         std::cout << "%TEST_FAILED% -------------------- regular I FY directionLeft with result=" << result << std::endl;
     } 
 }
 
 void testTranslateRotate() {
-    TranslateDirection direction = directionLeft;
-    Rotor rotor(rotorTypeRegular, 1, 'A', 'Y');
+    enigma::RegularRotor rotor(enigma::RegularID_I, 'A', 'Y');
     rotor.autoRotate();
     int position = rotor.getPosition();
     if (position != 26) {
@@ -89,12 +88,12 @@ void testTranslateRotate() {
 
 void testAlternateAllReflector() {
     char result0, result1;
-    for (int j = 1; j <= Rotor::MAX_INPUT_REFLECTOR_ID; j++) {
-        Rotor rotor(rotorTypeReflector, j, 'B', 'C');
+    for (int j = enigma::ReflectorID_B; j <= enigma::ReflectorID_Cthin; j++) {
+        enigma::ReflectorRotor rotor((enigma::ReflectorRotorId)j);
         
-        for (int i = 0; i < Rotor::DICT_SIZE; i++) {
-            result0 = rotor.translate(i + 'A', directionLeft);
-            result1 = rotor.translate(result0, directionLeft);
+        for (int i = 0; i < enigma::Rotor::DICT_SIZE; i++) {
+            result0 = rotor.translate(i + 'A');
+            result1 = rotor.translate(result0);
             if (result1 != (i + 'A')) {
                 std::cout << "%TEST_FAILED% -------------------- reflector between " << char(i + 'A') << " and " << result0 << " with result=" << result1 << std::endl;
             }
@@ -103,14 +102,12 @@ void testAlternateAllReflector() {
 }
 
 void testNoDiffReflector() {
-    Rotor one(rotorTypeReflector, 3, 'C', 'F');
-    Rotor two(rotorTypeReflector, 3, 1, 1);
+    enigma::ReflectorRotor one();
     char resultOne, resultTwo;
-    for(int i = 0; i < Rotor::DICT_SIZE; i++) {
-        resultOne = one.translate(i, directionLeft);
+    for(int i = 0; i < enigma::Rotor::DICT_SIZE; i++) {
+        resultOne = one.translate(i);
         one.autoRotate();
-        resultTwo = two.translate(i, directionRight);
-        two.autoRotate();
+        resultTwo = one.translate(i, enigma::directionRight);
         if (resultOne != resultTwo)
             std::cout << "%TEST_FAILED% -------------------- reflector 1 CF and 1 AA with results=" << resultOne << resultTwo << std::endl;
     }
@@ -118,25 +115,25 @@ void testNoDiffReflector() {
 
 void testTranslateReflector() {
     char result;
-    Rotor refl(rotorTypeReflector, 1, 'A', 'A');
-    result = refl.translate('N', directionRight);
+    enigma::ReflectorRotor rotor(enigma::ReflectorID_B);
+    result = rotor.translate('N');
     if (result != 'K')
-        std::cout << "%TEST_FAILED% -------------------- reflector 'B' translate N with results=" << result << std::endl;
+        std::cout << "%TEST_FAILED% -------------------- reflector 'B' translate N to K with results=" << result << std::endl;
     
-    Rotor refl2(rotorTypeReflector, 2, 'A', 'A');
-    result = refl2.translate('O', directionRight);
+    enigma::ReflectorRotor rotor2(enigma::ReflectorID_C);
+    result = rotor2.translate('O');
     if (result != 'G')
-        std::cout << "%TEST_FAILED% -------------------- reflector 'C' translate O with results=" << result << std::endl;
+        std::cout << "%TEST_FAILED% -------------------- reflector 'C' translate O to G with results=" << result << std::endl;
     
-    Rotor refl3(rotorTypeReflector, 3, 'A', 'A');
-    result = refl3.translate('P', directionRight);
+    enigma::ReflectorRotor rotor3(enigma::ReflectorID_Bthin);
+    result = rotor3.translate('P');
     if (result != 'M')
-        std::cout << "%TEST_FAILED% -------------------- reflector 'B thin' translate P with results=" << result << std::endl;
+        std::cout << "%TEST_FAILED% -------------------- reflector 'B thin' translate P to M with results=" << result << std::endl;
     
-    Rotor refl4(rotorTypeReflector, 4, 'A', 'A');
-    result = refl4.translate('Q', directionRight);
+    enigma::ReflectorRotor rotor4(enigma::ReflectorID_Cthin);
+    result = rotor4.translate('Q');
     if (result != 'Z')
-        std::cout << "%TEST_FAILED% -------------------- reflector 'C thin' translate Q with results=" << result << std::endl;
+        std::cout << "%TEST_FAILED% -------------------- reflector 'C thin' translate Q to Z with results=" << result << std::endl;
 
 }
 

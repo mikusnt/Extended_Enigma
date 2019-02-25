@@ -22,58 +22,50 @@
 #include <string>
 #include <map>
 
-using namespace std;
+namespace enigma {
+    class EnigmaDicts {
+    public:
+        static const char ERROR_CHAR = 'X';
+        static std::string toLower(std::string input);
+    };
 
-class EnigmaDicts {
-private:
-    const string EMPTY = "empty";
-public:
-    const string regularIDMap[11] = { EMPTY, "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "beta", "gamma" };
-    const string reflectorIDMap[5] = { EMPTY, "B", "C", "B_thin", "C_thin" };
-    const string rotorTypeMap[2] = { "regular", "reflector" };
-    static const int end = -1;
-    static const int REFLECTOR_THIN_SIZE = 6;
-    static const int REFLECTOR_SIZE = 1;
-    static const char ERROR_CHAR = 'X';
-    
-    int idMap(const string map[], string value);
-};
+    class EnigmaReader {
+    private:
+        const std::string PLUGBOARD = "plugboard";
+        const std::string RULES = "rules";
 
-class EnigmaReader {
-private:
-    const string PLUGBOARD = "plugboard";
-    const string RULES = "rules";
-    
-    const string ROTOR = "rotor_";
-    const string TYPE = "type";
+        const std::string REGULAR = "rotor_";
+        const std::string REFLECTOR = "reflector";
 
-    const string ID = "id";
-    const string RING_SHIFT = "ring_shift";
-    const string POSITION = "position";
-    
-    const string EMPTY = "_empty";
-   
-    string filename;
-    Plugboard plugboard;
-    vector<Rotor> rotors;
-    bool parsed;
-    
-    bool haveDuplicates();
-    int parsePosition(string pos);
-public:
-    EnigmaReader() {}
-    EnigmaReader(string filename);
-    bool wasParsed() const { return parsed; }
-    bool tryParseFile(string filename);
-    static void writeDefaultFile(string filename);
-    
-    
-    Plugboard getPlugboard() const { return plugboard; }
-    vector<Rotor> getRotors() const { return rotors; }
-    string getFilename() const { return filename; }
-    
-    friend ostream& operator<<(ostream& os, const EnigmaReader& reader);
-};
+        const std::string ID = "id";
+        const std::string RING_SHIFT = "ring_shift";
+        const std::string POSITION = "position";
+
+        const std::string EMPTY = "_empty";
+
+        std::string filename;
+        Plugboard plugboard;
+        std::vector<RegularRotor> rotors;
+        ReflectorRotor reflector;
+        bool parsed;
+
+        int parsePosition(std::string pos);
+    public:
+        EnigmaReader();
+        EnigmaReader(std::string filename);
+        bool wasParsed() const { return parsed; }
+        bool tryParseFile(std::string filename);
+        static void writeDefaultFile(std::string filename);
+
+
+        Plugboard getPlugboard() const { return plugboard; }
+        std::vector<RegularRotor> getRotors() const { return rotors; }
+        ReflectorRotor getReflector() const { return reflector; }
+        std::string getFilename() const { return filename; }
+
+        friend std::ostream& operator<<(std::ostream& os, const EnigmaReader& reader);
+    };
+}
 
 
 #endif /* ENIGMA_READER_HPP */
