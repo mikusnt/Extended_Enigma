@@ -17,6 +17,8 @@
 #include "enigma_reader.hpp"
 #include <exception>
 
+using namespace std;
+using namespace enigma;
 /*
  * Simple C++ Test Suite
  */
@@ -24,9 +26,7 @@
 void testRotateDS_KDO() {
     try {
         EnigmaReader reader("tests/config/testRotateDS_KDO.ini");
-        Plugboard plugboard = reader.getPlugboard();
-        vector<Rotor> rotors = reader.getRotors();
-        Enigma enigma(plugboard, rotors);
+        Enigma enigma(reader.getPlugboard(), reader.getRotors(), reader.getReflector());
         
         string results;
         string positions;
@@ -75,9 +75,8 @@ void testRotateDS_KDO() {
 void testRotateDS_UDO() {
     try {
         EnigmaReader reader("tests/config/testRotateDS_UDO.ini");
-        Plugboard plugboard = reader.getPlugboard();
-        vector<Rotor> rotors = reader.getRotors();
-        Enigma enigma(plugboard, rotors);
+        Enigma enigma(reader.getPlugboard(), reader.getRotors(), reader.getReflector());
+
         
         string results;
         string positions;
@@ -129,7 +128,7 @@ void testTranslateWehrmacht() {
        std::cout << "%TEST_FAILED% -------------------- error on parsing file"  << std::endl; 
        return;
     }
-    Enigma enigma(reader.getPlugboard(), reader.getRotors());
+    Enigma enigma(reader.getPlugboard(), reader.getRotors(), reader.getReflector());
     if (!enigma.wasInitialized()){
         std::cout << "%TEST_FAILED% -------------------- error on initializing enigma"  << std::endl; 
        return;  
@@ -158,7 +157,7 @@ void testTranslateAShift() {
        std::cout << "%TEST_FAILED% -------------------- error on parsing file"  << std::endl; 
        return;
     }
-    Enigma enigma(reader.getPlugboard(), reader.getRotors());
+    Enigma enigma(reader.getPlugboard(), reader.getRotors(), reader.getReflector());
     if (!enigma.wasInitialized()){
         std::cout << "%TEST_FAILED% -------------------- error on initializing enigma"  << std::endl; 
        return;  

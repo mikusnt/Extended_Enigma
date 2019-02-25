@@ -16,6 +16,8 @@
 
 #include "plugboard.hpp"
 
+using namespace std;
+using namespace enigma;
 /*
  * Simple C++ Test Suite
  */

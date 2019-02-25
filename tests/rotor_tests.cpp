@@ -102,7 +102,7 @@ void testAlternateAllReflector() {
 }
 
 void testNoDiffReflector() {
-    enigma::ReflectorRotor one();
+    enigma::ReflectorRotor one;
     char resultOne, resultTwo;
     for(int i = 0; i < enigma::Rotor::DICT_SIZE; i++) {
         resultOne = one.translate(i);

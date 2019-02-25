@@ -123,10 +123,10 @@ namespace enigma {
         file.open(filename, std::ios::out);
         if (file.is_open()) {
             //file << "[plugboard]\nrules = AC, BG, TU\n\n";
-            file << "[rotor_0]\ntype = reflector\nid = B\n\n";
-            file << "[rotor_1]\ntype = regular\nid = III\nposition = A\n\n";
-            file << "[rotor_2]\ntype = regular\nid = II\nposition = A\n\n";
+            file << "[reflector]\nid = B\n\n";
             file << "[rotor_3]\ntype = regular\nid = I\nposition = A\n\n";
+            file << "[rotor_2]\ntype = regular\nid = II\nposition = A\n\n";
+            file << "[rotor_1]\ntype = regular\nid = III\nposition = A\n\n";
 
             file.close();
         } else {
